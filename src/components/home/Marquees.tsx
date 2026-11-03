@@ -5,11 +5,11 @@ const Marquees = async() => {
     const data = await res.json();
     console.log(data)
     return (
-        <div className="bg-amber p-6 flex gap-5">
+        <div className="bg-amber p-6 flex gap-5 mt-5 mb-10">
             <p className="font-heading text-md leading-tight font-semibold text-white">CATEGORIES</p>
             <Marquee >
             
-            {data.map((item)=>{
+            {data.map((item: { _id: string; title: string })=>{
                 return(<p key={item._id} className="ml-10 font-heading text-md leading-tight font-semibold xl:text-base">{item.title}</p>)
             })}
         </Marquee>
