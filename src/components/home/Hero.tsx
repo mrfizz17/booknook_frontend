@@ -56,8 +56,8 @@ const covers: Array<CoverProps & {
     author: "Jane Austen",
     from: "#d7644b",
     to: "#a83e2c",
-    className: "left-[10%] top-[36%] w-24 xl:w-35",
-    rotate: -9,
+    className: "left-[10%] top-[36%] w-24 xl:w-40",
+    rotate: -14,
     delay: 0,
     duration: 6,
   },
@@ -66,7 +66,7 @@ const covers: Array<CoverProps & {
     author: "F. Scott Fitzgerald",
     from: "#367c7d",
     to: "#1f5658",
-    className: "left-[34%] top-[20%] w-28 xl:w-40",
+    className: "left-[34%] top-[20%] w-28 xl:w-44",
     rotate: 3,
     delay: 0.6,
     duration: 7,
@@ -76,7 +76,7 @@ const covers: Array<CoverProps & {
     author: "Louisa May Alcott",
     from: "#eab04a",
     to: "#c98a25",
-    className: "left-[60%] top-[30%] w-32 xl:w-48",
+    className: "left-[62%] top-[30%] w-32 xl:w-48",
     rotate: 8,
     delay: 1.2,
     duration: 6.5,
@@ -217,7 +217,6 @@ export function Hero() {
                 <div className="mt-7 flex flex-wrap items-center gap-3">
                   <Button
                     className="h-10 rounded-full px-5 text-sm"
-                    render={<Link href="/books" />}
                   >
                     Browse Books
                     <ArrowRightIcon />
