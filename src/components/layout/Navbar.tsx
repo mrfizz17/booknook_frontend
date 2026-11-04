@@ -25,7 +25,7 @@ import {
 import { cn } from "cn";
 
 // TODO: swap for real session state once auth is wired up.
-const isLoggedIn = true;
+const isLoggedIn = false;
 const mockUser = {
   name: "Ayesha Rahman",
   email: "ayesha@booknook.com",
