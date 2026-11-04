@@ -139,11 +139,10 @@ export function Navbar() {
               <Button
                 variant="outline"
                 className="rounded-full px-4"
-                render={<Link href="/login" />}
               >
                 Login
               </Button>
-              <Button className="rounded-full px-4" render={<Link href="/register" />}>
+              <Button className="rounded-full px-4">
                 Register
               </Button>
             </>

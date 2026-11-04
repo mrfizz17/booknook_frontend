@@ -6,4 +6,6 @@ export type Book = {
   image: string;
   description: string;
   addedAt: string;
+  userName?: string;
+  userEmail?: string;
 };

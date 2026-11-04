@@ -6,19 +6,16 @@ import { Button } from "@/components/ui/button";
 import type { Book } from "@/types/book";
 import Image from "next/image";
 
-// Backend records still use bookTitle/authorName/bookImage aliases.
-type BookCardBook = Book & {
-  bookTitle?: string;
-  authorName?: string;
-  bookImage?: string;
-};
+type BookCardBook = Book;
 
 export function BookCard({ book }: { book: BookCardBook }) {
-  const bookTitle = book.title || book.bookTitle || "Untitled";
-  const authorName = book.author || book.authorName || "Unknown author";
-  const bookImage = book.image || book.bookImage || "";
+  const bookTitle = book.title;
+  const authorName = book.author ;
+  const bookImage = book.image ;
   const { category } = book;
-  const href = `/books/${book._id}`;
+
+  console.log(book)
+ 
 
   return (
     <article className="group relative flex flex-col rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -57,18 +54,23 @@ export function BookCard({ book }: { book: BookCardBook }) {
         </Badge>
 
         <h3 className="mt-2 font-heading text-lg leading-snug font-semibold text-ink">
-          <Link href={href} className="hover:text-teal">
+
             {bookTitle}
-          </Link>
+        
         </h3>
         <p className="mt-0.5 text-xs text-muted-foreground">by {authorName}</p>
 
+        <Link href={`/books/${book._id}`}>
         <Button
-          className="mt-4 h-9 w-full rounded-full bg-dark text-sm text-paper hover:bg-ink"
+          className="mt-4 h-9 w-full rounded-full bg-dark text-sm text-paper hover:bg-ink cursor-pointer"
         >
           View Details
           <ArrowRightIcon />
         </Button>
+        
+        </Link>
+
+        
       </div>
     </article>
   );
