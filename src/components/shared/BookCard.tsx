@@ -32,6 +32,7 @@ export function BookCard({ book }: { book: Book }) {
            alt={bookTitle}
            width={180}
            height={180}
+           className="h-auto"
           />
         
         </div>

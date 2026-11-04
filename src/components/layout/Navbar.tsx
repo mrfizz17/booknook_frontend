@@ -74,7 +74,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Logo />
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex lg:border-2 border-amber p-2 rounded-3xl shadow-lg">
           {links.map((link) => {
             const active = isActive(pathname, link.href);
             return (
