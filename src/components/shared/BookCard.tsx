@@ -6,9 +6,19 @@ import { Button } from "@/components/ui/button";
 import type { Book } from "@/types/book";
 import Image from "next/image";
 
-export function BookCard({ book }: { book: Book }) {
-  const { bookTitle, authorName, category, bookImage} = book;
-  const href = `/books/${book.id}`;
+// Backend records still use bookTitle/authorName/bookImage aliases.
+type BookCardBook = Book & {
+  bookTitle?: string;
+  authorName?: string;
+  bookImage?: string;
+};
+
+export function BookCard({ book }: { book: BookCardBook }) {
+  const bookTitle = book.title || book.bookTitle || "Untitled";
+  const authorName = book.author || book.authorName || "Unknown author";
+  const bookImage = book.image || book.bookImage || "";
+  const { category } = book;
+  const href = `/books/${book._id}`;
 
   return (
     <article className="group relative flex flex-col rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">

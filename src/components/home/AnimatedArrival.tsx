@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion";
 import BookCard from '../shared/BookCard';
+import type { Book } from "@/types/book";
 const gridVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.09 } },
@@ -16,7 +17,7 @@ const cardVariants = {
 };
 
 
-const AnimatedArrival = ({books}) => {
+const AnimatedArrival = ({ books }: { books: Book[] }) => {
     return (
         <motion.div
         variants={gridVariants}
