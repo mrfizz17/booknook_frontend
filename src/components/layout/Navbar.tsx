@@ -39,7 +39,7 @@ const publicLinks = [
 
 const privateLinks = [
   { href: "/my-books", label: "My Books" },
-  { href: "/my-requests", label: "My Requests" },
+  { href: "/my-borrows", label: "My Borrows" },
   { href: "/add-book", label: "Add Book" },
 ];
 
