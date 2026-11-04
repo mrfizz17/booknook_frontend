@@ -136,15 +136,23 @@ export function Navbar() {
             </DropdownMenu>
           ) : (
             <>
+            <Link href={"/login"}>
               <Button
                 variant="outline"
                 className="rounded-full px-4"
               >
                 Login
               </Button>
+            
+            </Link>
+            <Link href={"/register"}>
               <Button className="rounded-full px-4">
                 Register
               </Button>
+            
+            </Link>
+              
+              
             </>
           )}
         </div>
@@ -243,17 +251,16 @@ export function Navbar() {
                   >
                     Login
                   </Button>
+                  
+                  <Link href={"/register"}>
                   <Button
                     className="w-full rounded-full"
-                    render={
-                      <Link
-                        href="/register"
-                        onClick={() => setMobileOpen(false)}
-                      />
-                    }
                   >
                     Register
                   </Button>
+                  
+                  </Link>
+                  
                 </div>
               )}
             </div>
