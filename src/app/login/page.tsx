@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FcGoogle } from "react-icons/fc";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   AlertCircleIcon,
@@ -16,13 +17,19 @@ import { z } from "zod";
 import { cn } from "cn";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { signIn } from "@/lib/auth-client";
 
 const loginSchema = z.object({
   email: z
@@ -40,7 +47,6 @@ const inputGroupBase =
 const inputGroupError =
   "border-[#C8553D] bg-[#FFF7F5] has-[[data-slot][aria-invalid=true]]:border-[#C8553D] has-[[data-slot][aria-invalid=true]]:ring-[#C8553D]/20 has-[[data-slot=input-group-control]:focus-visible]:border-[#C8553D] has-[[data-slot=input-group-control]:focus-visible]:ring-[#C8553D]/15";
 
-
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -53,6 +59,27 @@ export default function LoginPage() {
     mode: "onBlur",
     defaultValues: { email: "", password: "" },
   });
+
+  const onSubmit = async (values: LoginValues) => {
+    const { data, error } = await signIn.email({
+      email: values.email,
+      password: values.password,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    console.log("Log in Succesfull");
+  };
+
+  const handleGoogleSignUp = async () => {
+    const data = await signIn.social({
+      provider: "google",
+    });
+  };
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-24 sm:px-6">
@@ -75,7 +102,6 @@ export default function LoginPage() {
           className="pointer-events-none absolute -bottom-32 left-[12%] size-80 animate-pulse rounded-full bg-teal/40 blur-3xl [animation-delay:1s]"
         />
 
-        
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,13 +142,7 @@ export default function LoginPage() {
             Log in to borrow and manage your books.
           </p>
 
-          <form
-            onSubmit={handleSubmit((values) =>
-              console.log("Login submitted", values)
-            )}
-            noValidate
-            className="mt-7"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-7">
             <FieldGroup className="gap-5">
               <Field className="gap-2">
                 <FieldLabel
@@ -134,7 +154,7 @@ export default function LoginPage() {
                 <InputGroup
                   className={cn(
                     inputGroupBase,
-                    errors.email && inputGroupError
+                    errors.email && inputGroupError,
                   )}
                 >
                   <InputGroupAddon align="inline-start" className="pl-4">
@@ -146,9 +166,7 @@ export default function LoginPage() {
                     autoComplete="email"
                     placeholder="you@email.com"
                     aria-invalid={!!errors.email}
-                    aria-describedby={
-                      errors.email ? "email-error" : undefined
-                    }
+                    aria-describedby={errors.email ? "email-error" : undefined}
                     {...register("email")}
                   />
                 </InputGroup>
@@ -157,7 +175,10 @@ export default function LoginPage() {
                     id="email-error"
                     className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
                   >
-                    <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
+                    <AlertCircleIcon
+                      aria-hidden
+                      className="size-3.5 shrink-0"
+                    />
                     {errors.email.message}
                   </FieldError>
                 )}
@@ -173,7 +194,7 @@ export default function LoginPage() {
                 <InputGroup
                   className={cn(
                     inputGroupBase,
-                    errors.password && inputGroupError
+                    errors.password && inputGroupError,
                   )}
                 >
                   <InputGroupAddon align="inline-start" className="pl-4">
@@ -207,7 +228,10 @@ export default function LoginPage() {
                     id="password-error"
                     className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
                   >
-                    <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
+                    <AlertCircleIcon
+                      aria-hidden
+                      className="size-3.5 shrink-0"
+                    />
                     {errors.password.message}
                   </FieldError>
                 )}
@@ -235,9 +259,10 @@ export default function LoginPage() {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => console.log("Continue with Google clicked")}
-                className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-sm font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
+                onClick={handleGoogleSignUp}
+                className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-md font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
               >
+                <FcGoogle/>
                 Continue with Google
               </Button>
 

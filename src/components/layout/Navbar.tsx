@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 import { BookOpenIcon, LogOutIcon, MenuIcon, UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DialogDemo} from "@/components/layout/DialogDemo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -23,14 +25,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "cn";
+import { useSession } from "@/lib/auth-client";
+import { Dialog } from "@base-ui/react";
 
 // TODO: swap for real session state once auth is wired up.
-const isLoggedIn = false;
-const mockUser = {
-  name: "Ayesha Rahman",
-  email: "ayesha@booknook.com",
-  initials: "AR",
-};
 
 const publicLinks = [
   { href: "/", label: "Home" },
@@ -49,10 +47,7 @@ function isActive(pathname: string, href: string) {
 
 function Logo() {
   return (
-    <Link
-      href="/"
-      className="group flex items-center gap-2 text-ink"
-    >
+    <Link href="/" className="group flex items-center gap-2 text-ink">
       <span className="flex size-8 items-center justify-center rounded-lg bg-amber text-dark shadow-sm transition-transform group-hover:-rotate-6">
         <BookOpenIcon className="size-4" strokeWidth={2.2} />
       </span>
@@ -66,6 +61,12 @@ function Logo() {
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const session = useSession();
+
+  const [openDialog , setOpenDialog] = useState(false);
+
+
+  const isLoggedIn = session?.data?.user;
 
   const links = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
 
@@ -74,7 +75,10 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Logo />
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex lg:border-2 border-amber p-2 rounded-3xl shadow-lg">
+        <nav
+          aria-label="Main"
+          className="hidden items-center gap-1 lg:flex lg:border-2 border-amber p-2 rounded-3xl shadow-lg"
+        >
           {links.map((link) => {
             const active = isActive(pathname, link.href);
             return (
@@ -85,7 +89,7 @@ export function Navbar() {
                   "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
                   active
                     ? "bg-dark text-paper"
-                    : "text-muted-foreground hover:bg-cream hover:text-ink"
+                    : "text-muted-foreground hover:bg-cream hover:text-ink",
                 )}
               >
                 {link.label}
@@ -96,7 +100,8 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           {isLoggedIn ? (
-            <DropdownMenu>
+            <>
+              <DropdownMenu>
               <DropdownMenuTrigger
                 render={
                   <Button
@@ -108,51 +113,50 @@ export function Navbar() {
                 }
               >
                 <Avatar>
-                  <AvatarFallback className="bg-teal text-xs font-semibold text-paper">
-                    {mockUser.initials}
+                  <AvatarFallback className="bg-amber text-xs font-semibold text-paper">
+                    {session?.data?.user.name.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="px-1.5 py-2">
-                  <span className="block text-sm font-semibold text-foreground">
-                    {mockUser.name}
-                  </span>
-                  <span className="block truncate text-xs font-normal">
-                    {mockUser.email}
-                  </span>
-                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="px-1.5 py-2">
+                    <span className="block text-sm font-semibold text-base">
+                      {session?.data?.user.name}
+                    </span>
+                    <span className="block truncate text-xs font-normal">
+                      {session?.data?.user.email}
+                    </span>
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem render={<Link href="/profile" />}>
                   <UserIcon />
                   My Profile
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <LogOutIcon />
-                  Logout
-                </DropdownMenuItem>
+                
+                
+                
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {<DialogDemo />}
+            
+            </>
+            
+            
           ) : (
             <>
-            <Link href={"/login"}>
-              <Button
-                variant="outline"
-                className="rounded-full px-4"
-              >
-                Login
-              </Button>
-            
-            </Link>
-            <Link href={"/register"}>
-              <Button className="rounded-full px-4">
-                Register
-              </Button>
-            
-            </Link>
-              
-              
+              <Link href={"/login"}>
+                <Button variant="outline" className="rounded-full px-4">
+                  Login
+                </Button>
+              </Link>
+              <Link href={"/register"}>
+                <Button className="rounded-full px-4">Register</Button>
+              </Link>
             </>
           )}
         </div>
@@ -176,10 +180,7 @@ export function Navbar() {
               {/* <Logo onClick={() => setMobileOpen(false)} /> */}
             </SheetHeader>
 
-            <nav
-              aria-label="Mobile"
-              className="flex flex-col gap-1 p-4"
-            >
+            <nav aria-label="Mobile" className="flex flex-col gap-1 p-4">
               {links.map((link) => {
                 const active = isActive(pathname, link.href);
                 return (
@@ -192,7 +193,7 @@ export function Navbar() {
                       "rounded-full px-4 py-2 text-sm font-medium transition-colors",
                       active
                         ? "bg-dark text-paper"
-                        : "text-muted-foreground hover:bg-cream hover:text-ink"
+                        : "text-muted-foreground hover:bg-cream hover:text-ink",
                     )}
                   >
                     {link.label}
@@ -207,15 +208,15 @@ export function Navbar() {
                   <div className="flex items-center gap-3">
                     <Avatar size="lg">
                       <AvatarFallback className="bg-teal text-sm font-semibold text-paper">
-                        {mockUser.initials}
+                        {session?.data?.user.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">
-                        {mockUser.name}
+                        {session?.data?.user.name}
                       </p>
                       <p className="truncate text-xs text-muted-foreground">
-                        {mockUser.email}
+                        {session?.data?.user.email}
                       </p>
                     </div>
                   </div>
@@ -251,16 +252,10 @@ export function Navbar() {
                   >
                     Login
                   </Button>
-                  
+
                   <Link href={"/register"}>
-                  <Button
-                    className="w-full rounded-full"
-                  >
-                    Register
-                  </Button>
-                  
+                    <Button className="w-full rounded-full">Register</Button>
                   </Link>
-                  
                 </div>
               )}
             </div>

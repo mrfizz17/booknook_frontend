@@ -29,7 +29,9 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { authClient, signUp } from "@/lib/auth-client";
+import { authClient, signIn, signUp } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 const registerSchema = z
   .object({
@@ -72,6 +74,8 @@ export default function RegisterPage() {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = async (values:RegisterValues) => {
 
 
@@ -81,8 +85,20 @@ export default function RegisterPage() {
       password:values.password as string,
     })
 
+    if(error){
+      console.log(error.message);
+    }
+
+    router.push("/login")
+
     console.log(data);
   };
+
+  const handleGoogleSignUp=async ()=>{
+    const data = await signIn.social({
+      provider:"google"
+    })
+  }
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-24 sm:px-6">
@@ -145,231 +161,7 @@ export default function RegisterPage() {
             Create your account to start borrowing and sharing books.
           </p>
 
-          {/* <form onSubmit={handleSubmit} noValidate className="mt-7">
-            <FieldGroup className="gap-5">
-              <Field className="gap-2">
-                <FieldLabel
-                  htmlFor="name"
-                  className="text-sm font-medium text-ink"
-                >
-                  Full name
-                </FieldLabel>
-                <InputGroup
-                  className={cn(inputGroupBase, errors.name && inputGroupError)}
-                >
-                  <InputGroupAddon align="inline-start" className="pl-4">
-                    <UserIcon />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="name"
-                    name="name"
-                    autoComplete="name"
-                    placeholder="Your name"
-                    aria-invalid={!!errors.name}
-                    aria-describedby={errors.name ? "name-error" : undefined}
-                  />
-                </InputGroup>
-                {errors.name?.message && (
-                  <FieldError
-                    id="name-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
-                  >
-                    <AlertCircleIcon
-                      aria-hidden
-                      className="size-3.5 shrink-0"
-                    />
-                    {errors.name.message}
-                  </FieldError>
-                )}
-              </Field>
-
-              <Field className="gap-2">
-                <FieldLabel
-                  htmlFor="email"
-                  className="text-sm font-medium text-ink"
-                >
-                  Email
-                </FieldLabel>
-                <InputGroup
-                  className={cn(
-                    inputGroupBase,
-                    errors.email && inputGroupError,
-                  )}
-                >
-                  <InputGroupAddon align="inline-start" className="pl-4">
-                    <MailIcon />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    autoComplete="email"
-                    placeholder="you@email.com"
-                    aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? "email-error" : undefined}
-                  />
-                </InputGroup>
-                {errors.email?.message && (
-                  <FieldError
-                    id="email-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
-                  >
-                    <AlertCircleIcon
-                      aria-hidden
-                      className="size-3.5 shrink-0"
-                    />
-                    {errors.email.message}
-                  </FieldError>
-                )}
-              </Field>
-
-              <Field className="gap-2">
-                <FieldLabel
-                  htmlFor="password"
-                  className="text-sm font-medium text-ink"
-                >
-                  Password
-                </FieldLabel>
-                <InputGroup
-                  className={cn(
-                    inputGroupBase,
-                    errors.password && inputGroupError,
-                  )}
-                >
-                  <InputGroupAddon align="inline-start" className="pl-4">
-                    <LockIcon />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    autoComplete="new-password"
-                    placeholder="••••••••"
-                    aria-invalid={!!errors.password}
-                    aria-describedby={
-                      errors.password ? "password-error" : undefined
-                    }
-                  />
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupButton
-                      size="icon-sm"
-                      onClick={() => setShowPassword((value) => !value)}
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                    </InputGroupButton>
-                  </InputGroupAddon>
-                </InputGroup>
-                {errors.password?.message && (
-                  <FieldError
-                    id="password-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
-                  >
-                    <AlertCircleIcon
-                      aria-hidden
-                      className="size-3.5 shrink-0"
-                    />
-                    {errors.password.message}
-                  </FieldError>
-                )}
-              </Field>
-
-              <Field className="gap-2">
-                <FieldLabel
-                  htmlFor="confirm-password"
-                  className="text-sm font-medium text-ink"
-                >
-                  Confirm password
-                </FieldLabel>
-                <InputGroup
-                  className={cn(
-                    inputGroupBase,
-                    errors.confirmPassword && inputGroupError,
-                  )}
-                >
-                  <InputGroupAddon align="inline-start" className="pl-4">
-                    <LockIcon />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="confirm-password"
-                    name="confrim-password"
-                    type={showConfirmPassword ? "text" : "password"}
-                    autoComplete="new-password"
-                    placeholder="••••••••"
-                    aria-invalid={!!errors.confirmPassword}
-                    aria-describedby={
-                      errors.confirmPassword
-                        ? "confirm-password-error"
-                        : undefined
-                    }
-                  />
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupButton
-                      size="icon-sm"
-                      onClick={() => setShowConfirmPassword((value) => !value)}
-                      aria-label={
-                        showConfirmPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
-                    </InputGroupButton>
-                  </InputGroupAddon>
-                </InputGroup>
-                {errors.confirmPassword?.message && (
-                  <FieldError
-                    id="confirm-password-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
-                  >
-                    <AlertCircleIcon
-                      aria-hidden
-                      className="size-3.5 shrink-0"
-                    />
-                    {errors.confirmPassword.message}
-                  </FieldError>
-                )}
-              </Field>
-
-              <Button
-                type="submit"
-                className="relative h-14 w-full overflow-hidden rounded-full bg-amber text-base font-bold text-ink shadow-[0_16px_30px_-14px_rgba(232,163,61,0.9)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/30"
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 animate-shine bg-white/35 blur-md"
-                />
-                <span className="relative z-10">Register</span>
-              </Button>
-
-              <div className="flex items-center gap-3">
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
-                <span className="text-xs text-muted-foreground">
-                  or continue with
-                </span>
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
-              </div>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => console.log("Continue with Google clicked")}
-                className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-sm font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
-              >
-                Continue with Google
-              </Button>
-
-              <p className="pt-1 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Link
-                  href="/login"
-                  className="font-semibold text-[#B7791F] transition-colors hover:text-amber hover:underline"
-                >
-                  Login
-                </Link>
-              </p>
-            </FieldGroup>
-          </form> */}
+         
 
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -581,9 +373,10 @@ export default function RegisterPage() {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => console.log("Continue with Google clicked")}
+                onClick={handleGoogleSignUp}
                 className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-sm font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
               >
+                <FcGoogle />
                 Continue with Google
               </Button>
 

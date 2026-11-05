@@ -81,7 +81,7 @@
   --secondary-foreground: var(--ink);
   --muted: var(--cream);
   --muted-foreground: #5a6675;
-  --accent: var(--teal);
+  --accent: var(--amber);
   --accent-foreground: var(--paper);
   --destructive: var(--terracotta);
   --destructive-foreground: var(--paper);
