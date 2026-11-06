@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { BookOpenIcon, LogOutIcon, MenuIcon, UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { DialogDemo} from "@/components/layout/DialogDemo";
+import { DialogDemo} from "@/components/DialogOpen/DialogDemo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "cn";
 import { useSession } from "@/lib/auth-client";
-import { Dialog } from "@base-ui/react";
+
 
 // TODO: swap for real session state once auth is wired up.
 

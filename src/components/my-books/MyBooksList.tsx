@@ -8,6 +8,8 @@ import { BookOpenIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Book } from "@/types/book";
+import { EditDialog } from "../DialogOpen/EditDialog";
+import { DeleteDialog } from "../DialogOpen/DeleteDialog";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -162,7 +164,7 @@ export function MyBooksList({ books }: { books: Book[] }) {
         ) : (
           <>
             {/* header */}
-            <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-6 border-b border-[#E9E2D6] px-3 pb-4 md:grid">
+            <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-10 px-3 pb-4 md:grid">
               <span className="text-[11px] font-semibold tracking-[0.18em] text-[#8A94A3] uppercase">
                 Book
               </span>
@@ -181,11 +183,11 @@ export function MyBooksList({ books }: { books: Book[] }) {
               variants={listVariants}
               initial={reduceMotion ? false : "hidden"}
               animate="show"
-              className="mt-1 flex flex-col"
+              className="mt-1 flex flex-col gap-5"
             >
               {books.map((book) => (
                 <motion.li key={book._id} variants={rowVariants}>
-                  <div className="grid grid-cols-1 gap-4 rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
+                  <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
                     {/* book */}
                     <div className="flex min-w-0 items-center gap-4">
                       <BookCover book={book} />
@@ -217,24 +219,9 @@ export function MyBooksList({ books }: { books: Book[] }) {
 
                     {/* actions */}
                     <div className="flex items-center justify-start gap-2 md:justify-end">
-                      <Button
-                        variant="outline"
-                        size="icon-lg"
-                        aria-label={`Edit ${book.title}`}
-                        onClick={() => console.log("Edit book", book._id)}
-                        className="rounded-xl border-[#E9E2D6] bg-white text-[#5A6675] hover:bg-[#FBF4E6] hover:text-ink"
-                      >
-                        <PencilIcon className="size-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon-lg"
-                        aria-label={`Delete ${book.title}`}
-                        onClick={() => console.log("Delete book", book._id)}
-                        className="rounded-xl border-transparent bg-[#FDF0EC] text-[#C8553D] hover:bg-[#FADDD5] hover:text-[#A8442F]"
-                      >
-                        <Trash2Icon className="size-4" />
-                      </Button>
+
+                      <EditDialog book={book}/>
+                      <DeleteDialog  book={book}/>
                     </div>
                   </div>
                 </motion.li>
