@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Book } from "@/types/book";
 import Image from "next/image";
+import { CardSkeleton } from "../skelton/CardSkeleton";
 
 type BookCardBook = Book;
 
@@ -19,7 +20,7 @@ export function BookCard({ book }: { book: BookCardBook }) {
 
   return (
     <article className="group relative flex flex-col rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-   
+        
         <span className="absolute top-5 left-5 z-10 rounded-full bg-dark px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-paper uppercase">
           New
         </span>

@@ -1,22 +1,14 @@
-
-
 import Link from "next/link";
 
 import { ArrowRightIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import AnimatedArrival from "./AnimatedArrival";
+import { Book } from "@/types/book";
 
+export async function NewArrivals({book}:{book:Book[]}) {
+  
 
-
-
-
-export async function NewArrivals() {
-
-  const res = await fetch("http://localhost:8000/api/new-arrival");
-  const data = await res.json();
-
-  // console.log("New Book",data);
 
   return (
     <section
@@ -37,17 +29,15 @@ export async function NewArrivals() {
         </div>
       </div>
 
-      <AnimatedArrival books={data} />
-
-      
+      <AnimatedArrival books={book} />
 
       <div className="mt-12 flex justify-center">
-        <Button
-          className="h-10 rounded-full px-6"
-        >
-          See All Books
-          <ArrowRightIcon />
-        </Button>
+        <Link href={"/all-books"}>
+          <Button className="h-10 rounded-full px-6">
+            See All Books
+            <ArrowRightIcon />
+          </Button>
+        </Link>
       </div>
     </section>
   );

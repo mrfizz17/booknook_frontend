@@ -1,4 +1,5 @@
 import AnimatedArrival from '@/components/home/AnimatedArrival';
+import { CardSkeleton } from '@/components/skelton/CardSkeleton';
 import React from 'react';
 
 const AllBooks = async () => {
@@ -6,7 +7,7 @@ const AllBooks = async () => {
     const res = await fetch("http://localhost:8000/api/all-books");
 
     const allBooks = await res.json();
-    return (
+    return(
     <>
        <section
       id="all-books"

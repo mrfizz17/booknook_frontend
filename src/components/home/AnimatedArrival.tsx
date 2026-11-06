@@ -28,6 +28,7 @@ const AnimatedArrival = ({ books }: { books: Book[] }) => {
       >
         {books.map((book) => (
           <motion.div key={book._id} variants={cardVariants}>
+            
             <BookCard book={book} />
           </motion.div>
         ))}
