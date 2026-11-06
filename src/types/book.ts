@@ -8,4 +8,5 @@ export type Book = {
   addedAt: string;
   userName?: string;
   userEmail?: string;
+  count:number
 };

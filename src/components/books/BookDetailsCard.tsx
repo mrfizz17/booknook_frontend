@@ -30,6 +30,9 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
 
 
+
+
+
   return (
     <Card className="mx-auto w-full max-w-[1200px] rounded-[32px] border border-[#E9E2D6] bg-white p-7 shadow-[0_30px_80px_-40px_rgba(30,42,58,0.35)] ring-0">
       <div className="grid gap-7 md:grid-cols-[400px_1fr]">
@@ -104,7 +107,9 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
           {/* Actions */}
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <BorrowButton />
+
+            <BorrowButton book={book}/>
+
             <Link href={"/"}>
             <Button
               variant="outline"
