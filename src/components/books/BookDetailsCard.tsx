@@ -13,6 +13,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BorrowButton } from "@/components/books/BorrowButton";
 import type { Book } from "@/types/book";
+import { format } from "date-fns";
 
 export function BookDetailsCard({ book }: { book: Book }) {
   console.log(book)
@@ -24,12 +25,10 @@ export function BookDetailsCard({ book }: { book: Book }) {
     .slice(0, 2)
     .toUpperCase();
 
-  const addedOn = new Date(book.addedAt).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+    const addedDate = format(book.addedAt,"d MMMM yyyy");
+
+
+
 
   return (
     <Card className="mx-auto w-full max-w-[1200px] rounded-[32px] border border-[#E9E2D6] bg-white p-7 shadow-[0_30px_80px_-40px_rgba(30,42,58,0.35)] ring-0">
@@ -40,9 +39,9 @@ export function BookDetailsCard({ book }: { book: Book }) {
             <Image
               src={book.image}
               alt={book.title}
-              width={240}
+              width={320}
               height={320}
-              className="aspect-[3/4] w-60 rounded-r-2xl object-cover shadow-xl"
+              className=" w-70 rounded-r-2xl object-cover shadow-xl"
             />
           ) : (
             <div className="flex aspect-[3/4] w-60 items-center justify-center rounded-r-2xl bg-[#F1EBDF] text-muted-foreground shadow-xl">
@@ -98,7 +97,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
                 <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
                   Added on
                 </p>
-                <p className="text-sm font-semibold text-ink">{addedOn}</p>
+                <p className="text-sm font-semibold text-ink">{addedDate}</p>
               </div>
             </div>
           </div>

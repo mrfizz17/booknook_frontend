@@ -70,13 +70,16 @@ export function BorrowTicket({
 
       {/* Actions */}
       <div className="flex items-center gap-3 px-7 py-6">
-        <Button
+        <Link href={`/books/${book._id}`}>
+          <Button
           variant="outline"
-          render={<Link href={`/books/${book._id}`} />}
           className="h-11 rounded-full border-[#E9E2D6] bg-white px-6 text-sm font-medium text-ink hover:bg-[#FBF4E6] hover:text-ink"
         >
           Details
         </Button>
+        
+        </Link>
+        
         <Button
           onClick={() => console.log("Return book", book._id)}
           className="h-11 flex-1 rounded-full bg-[#1E2A3A] text-sm font-semibold text-paper transition-colors duration-300 group-hover:bg-[#E8A33D] hover:bg-[#E8A33D] hover:text-ink group-hover:text-[#1E2A3A]"

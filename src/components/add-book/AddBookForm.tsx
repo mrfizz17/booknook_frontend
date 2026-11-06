@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { format } from "date-fns";
+import { useSession } from "@/lib/auth-client";
+
 
 const categories = [
   { value: "Fiction", label: "Fiction" },
@@ -29,18 +32,35 @@ const fieldBase =
   "h-13 w-full rounded-2xl border-border text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
 
 export function AddBookForm() {
-  const [bookTitle, setBookTitle] = useState("The Great Gatsby");
-  const [authorName, setAuthorName] = useState("");
-  const [category, setCategory] = useState("Fiction");
-  const [bookImage, setBookImage] = useState("");
-  const [description, setDescription] = useState("");
+  
+  const session = useSession();
 
-  const userName = "Rafi Ahmed";
-  const userEmail = "rafi@email.com";
+  const userName = session?.data?.user.name;
+  const userEmail = session?.data?.user.email;
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    toast.success("Book added successfully");
+    
+    const formEntries = new FormData(event.currentTarget);
+    const formData = Object.fromEntries(formEntries.entries());
+
+    const date= new Date()
+    const addedAt =format(date,"d MMMM yyyy")
+
+    formData.addedAt = addedAt;
+
+    console.log(formData);
+
+    const res = await fetch("http://localhost:8000/api/add-books",{
+      method:"POST",
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(formData)
+    })
+
+    const data = await res.json();
+    console.log(data)
   }
 
   return (
@@ -58,8 +78,7 @@ export function AddBookForm() {
             <Label htmlFor="book-title">Book Title</Label>
             <Input
               id="book-title"
-              value={bookTitle}
-              onChange={(event) => setBookTitle(event.target.value)}
+              name="title"
               placeholder="e.g. The Great Gatsby"
               className={cn(fieldBase, "bg-paper")}
             />
@@ -69,8 +88,7 @@ export function AddBookForm() {
             <Label htmlFor="author-name">Author Name</Label>
             <Input
               id="author-name"
-              value={authorName}
-              onChange={(event) => setAuthorName(event.target.value)}
+              name="author"
               placeholder="e.g. F. Scott Fitzgerald"
               className={cn(fieldBase, "bg-paper")}
             />
@@ -81,8 +99,9 @@ export function AddBookForm() {
           <Label htmlFor="category">Category</Label>
           <Select
             items={categories}
-            value={category}
-            onValueChange={(value) => setCategory(value as string)}
+
+            name="category"
+       
           >
             <SelectTrigger
               id="category"
@@ -117,8 +136,9 @@ export function AddBookForm() {
             <Input
               id="book-image"
               type="url"
-              value={bookImage}
-              onChange={(event) => setBookImage(event.target.value)}
+              name="image"
+              
+            
               placeholder="https://i.ibb.co/your-book-cover.jpg"
               className={cn(fieldBase, "bg-paper pl-11")}
             />
@@ -129,8 +149,9 @@ export function AddBookForm() {
           <Label htmlFor="description">Short Description</Label>
           <Textarea
             id="description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+          
+            name="description"
+        
             placeholder="What is this book about?"
             className="min-h-[140px] resize-none rounded-2xl border-border bg-paper px-4 py-3 text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
           />
@@ -144,6 +165,7 @@ export function AddBookForm() {
                 id="user-name"
                 value={userName}
                 readOnly
+                name="userName"
                 aria-readonly
                 className={cn(
                   fieldBase,
@@ -162,6 +184,7 @@ export function AddBookForm() {
             <div className="relative">
               <Input
                 id="user-email"
+                name="userEmail"
                 type="email"
                 value={userEmail}
                 readOnly

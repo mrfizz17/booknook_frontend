@@ -14,7 +14,7 @@ export function BookCard({ book }: { book: BookCardBook }) {
   const bookImage = book.image ;
   const { category } = book;
 
-  console.log(book)
+  // console.log(book)
  
 
   return (

@@ -15,6 +15,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient, signOut } from "@/lib/auth-client";
+import { LogOutIcon } from "lucide-react";
 
 import { redirect, useRouter } from "next/navigation";
 
@@ -33,7 +34,7 @@ export function DialogDemo() {
   return (
     <Dialog>
       <DialogTrigger
-        render={<Button className={"bg-amber rounded-[4px] text-white"}>Logout</Button>}
+        render={<Button className={"bg-amber rounded-[4px] text-white"}><LogOutIcon />Logout</Button>}
       />
       <DialogContent className="sm:max-w-sm bg-accent-foreground">
         <DialogHeader>

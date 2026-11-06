@@ -64,12 +64,14 @@ export function BorrowList({ books }: { books: BorrowedBook[] }) {
           </div>
 
           <div className="shrink-0">
+            <Link href={"/all-books"}>
             <Button
-              render={<Link href="/books" />}
               className="h-11 rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] hover:bg-[#F2B157] hover:text-[#16202D]"
             >
               Browse More Books
             </Button>
+            </Link>
+            
           </div>
         </motion.div>
       </section>

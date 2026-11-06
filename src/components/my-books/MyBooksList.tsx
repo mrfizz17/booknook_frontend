@@ -120,8 +120,8 @@ export function MyBooksList({ books }: { books: Book[] }) {
           </motion.div>
 
           <div className="shrink-0">
+            <Link href={"/add-book"}>
             <Button
-              render={<Link href="/add-book" />}
               className="group relative h-11 overflow-hidden rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] transition-transform hover:bg-[#F2B157] hover:text-[#16202D]"
             >
               <PlusIcon className="size-4" strokeWidth={2.4} />
@@ -131,6 +131,8 @@ export function MyBooksList({ books }: { books: Book[] }) {
                 className="pointer-events-none absolute inset-y-0 left-0 w-1/2 animate-shine bg-linear-to-r from-transparent via-white/45 to-transparent"
               />
             </Button>
+            </Link>
+            
           </div>
         </div>
       </section>

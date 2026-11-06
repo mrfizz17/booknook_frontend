@@ -16,7 +16,7 @@ export async function NewArrivals() {
   const res = await fetch("http://localhost:8000/api/new-arrival");
   const data = await res.json();
 
-  console.log("New Book",data);
+  // console.log("New Book",data);
 
   return (
     <section

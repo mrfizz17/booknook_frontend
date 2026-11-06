@@ -233,10 +233,7 @@ export function Navbar() {
                     <UserIcon />
                     My Profile
                   </Button>
-                  <Button variant="ghost" className="w-full rounded-full">
-                    <LogOutIcon />
-                    Logout
-                  </Button>
+                  <DialogDemo />
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
