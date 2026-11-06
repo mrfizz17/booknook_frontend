@@ -4,7 +4,10 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { BookOpenIcon } from "lucide-react";
 
-import { BorrowTicket, type BorrowedBook } from "@/components/my-borrows/BorrowTicket";
+import {
+  BorrowTicket,
+  type BorrowedBook,
+} from "@/components/my-borrows/BorrowTicket";
 import { Button } from "@/components/ui/button";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -59,19 +62,17 @@ export function BorrowList({ books }: { books: BorrowedBook[] }) {
             </h1>
 
             <p className="mt-2 text-sm text-paper/65 sm:text-base">
-              Keep track of your borrowed books and return them when you are done.
+              Keep track of your borrowed books and return them when you are
+              done.
             </p>
           </div>
 
           <div className="shrink-0">
             <Link href={"/all-books"}>
-            <Button
-              className="h-11 rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] hover:bg-[#F2B157] hover:text-[#16202D]"
-            >
-              Browse More Books
-            </Button>
+              <Button className="h-11 rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] hover:bg-[#F2B157] hover:text-[#16202D]">
+                Browse More Books
+              </Button>
             </Link>
-            
           </div>
         </motion.div>
       </section>
@@ -90,12 +91,11 @@ export function BorrowList({ books }: { books: BorrowedBook[] }) {
               Your reading list is empty. Find something lovely on the shelf and
               it will show up here.
             </p>
-            <Button
-              render={<Link href="/books" />}
-              className="mt-6 h-10 rounded-full bg-amber px-5 text-sm font-semibold text-[#16202D] hover:bg-[#F2B157] hover:text-[#16202D]"
-            >
-              Browse Books
-            </Button>
+            <Link href={"/all-books"}>
+              <Button className="mt-6 h-10 rounded-full bg-amber px-5 text-sm font-semibold text-[#16202D] hover:bg-[#F2B157] hover:text-[#16202D]">
+                Browse Books
+              </Button>
+            </Link>
           </div>
         ) : (
           <motion.div
@@ -108,7 +108,11 @@ export function BorrowList({ books }: { books: BorrowedBook[] }) {
             className="flex flex-col gap-6"
           >
             {books.map((book) => (
-              <BorrowTicket key={book._id} book={book} reduceMotion={reduceMotion} />
+              <BorrowTicket
+                key={book._id}
+                book={book}
+                reduceMotion={reduceMotion}
+              />
             ))}
           </motion.div>
         )}

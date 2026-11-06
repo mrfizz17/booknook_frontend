@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon,
   BookOpenIcon,
   CalendarIcon,
+  Layers3,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -77,7 +78,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
           </p>
 
           {/* Info tiles */}
-          <div className="mt-7 grid gap-4 sm:grid-cols-2">
+          <div className="mt-7 grid gap-4 sm:grid-cols-3">
             <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
               <Avatar>
                 <AvatarFallback className="bg-teal font-semibold text-paper">
@@ -94,13 +95,25 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
             <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
               <span className="flex size-9 items-center justify-center rounded-xl bg-[#FBE9C6] text-[#7A4F0C]">
-                <CalendarIcon className="size-4" />
+                <CalendarIcon className="size-6" />
               </span>
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
                   Added on
                 </p>
                 <p className="text-sm font-semibold text-ink">{addedDate}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
+              <span className="flex size-9 items-center justify-center rounded-xl bg-[#FBE9C6] text-[#7A4F0C]">
+                {/* <CalendarIcon className="size-4" /> */}
+                <Layers3  className="size-6"/>
+              </span>
+              <div>
+                <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                  Copies Left
+                </p>
+                <p className="text-sm font-semibold text-ink">{book.count}</p>
               </div>
             </div>
           </div>
@@ -113,7 +126,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
             <Link href={"/"}>
             <Button
               variant="outline"
-              className="h-14 rounded-full border-[#E9E2D6] px-7 text-base font-semibold text-ink hover:bg-cream"
+              className="h-14 rounded-full border-[#E9E2D6] px-7 text-base font-semibold text-ink hover:bg-cream w-full"
             >
               <ArrowLeftIcon className="size-4" />
               Back

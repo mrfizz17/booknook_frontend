@@ -6,6 +6,9 @@ import { BookOpenIcon, Undo2Icon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export type BorrowedBook = {
   _id: string;
@@ -13,6 +16,10 @@ export type BorrowedBook = {
   author: string;
   category: string;
   image: string;
+  description:string;
+  BorrowedUserEmail:string;
+  BorrowedUserName:string;
+  OldId:string
 };
 
 export function BorrowTicket({
@@ -22,6 +29,23 @@ export function BorrowTicket({
   book: BorrowedBook;
   reduceMotion: boolean | null;
 }) {
+
+  const session = useSession();
+  const router = useRouter();
+
+  const email = session?.data?.user.email;
+  const id = book._id;
+
+
+  const handlereturn=async ()=>{
+    const res = await fetch(`http://localhost:8000/api/my-borrows/delete/${id}/${email}`,{
+      method:"DELETE"
+    });
+
+    const data = await res.json();
+    toast.success(data.msg);
+    router.refresh()
+  }
 
 
   return (
@@ -70,7 +94,7 @@ export function BorrowTicket({
 
       {/* Actions */}
       <div className="flex items-center gap-3 px-7 py-6">
-        <Link href={`/books/${book._id}`}>
+        <Link href={`/books/${book.OldId}`}>
           <Button
           variant="outline"
           className="h-11 rounded-full border-[#E9E2D6] bg-white px-6 text-sm font-medium text-ink hover:bg-[#FBF4E6] hover:text-ink"
@@ -81,7 +105,7 @@ export function BorrowTicket({
         </Link>
         
         <Button
-          onClick={() => console.log("Return book", book._id)}
+          onClick={handlereturn}
           className="h-11 flex-1 rounded-full bg-[#1E2A3A] text-sm font-semibold text-paper transition-colors duration-300 group-hover:bg-[#E8A33D] hover:bg-[#E8A33D] hover:text-ink group-hover:text-[#1E2A3A]"
         >
           <Undo2Icon className="size-4" strokeWidth={2.2} />

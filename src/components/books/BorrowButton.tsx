@@ -20,9 +20,9 @@ export function BorrowButton({book}:{book:Book}) {
 
   const handleBorrow=async  ()=>{
     const id = book._id;
-    const {_id,count,userEmail,userName,...updateData} ={...book,BorrowedUserEmail:BorrowedUserEmail,BorrowedUserName:BorrowedUserName} ;
+    const {_id,count,userEmail,userName,...updateData} ={...book,BorrowedUserEmail:BorrowedUserEmail,BorrowedUserName:BorrowedUserName,OldId:id} ;
     
-    // updateData.LoginUserEmail=LoginUserEmail;
+
 
     console.log(updateData)
 
@@ -45,7 +45,7 @@ export function BorrowButton({book}:{book:Book}) {
       type="button"
       onClick={handleBorrow}
       disabled={book.count===0}
-      className="group relative h-14 flex-1 overflow-hidden rounded-full bg-amber text-base font-bold text-ink shadow-[0_16px_30px_-14px_rgba(232,163,61,0.9)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/30"
+      className="group relative min-h-14 flex-1 overflow-hidden rounded-full bg-amber text-base font-bold text-ink shadow-[0_16px_30px_-14px_rgba(232,163,61,0.9)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/30"
     >
       {/* Shine sweep on hover */}
       <span
