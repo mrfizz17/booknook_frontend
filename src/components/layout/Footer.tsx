@@ -51,7 +51,7 @@ export function Footer() {
             <div className="mt-5 flex gap-2">
        
                 <Link
-                  href={"www.facebook.com"}
+                  href={"https://www.facebook.com"}
                   aria-label="facebook"
                   className="flex size-8 items-center justify-center rounded-full bg-paper/10 text-lg font-medium text-paper/70 transition-colors hover:bg-amber hover:text-dark"
                 >
