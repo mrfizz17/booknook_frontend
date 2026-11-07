@@ -183,7 +183,7 @@ export function MyBooksList({ books }: { books: Book[] }) {
             >
               {books.map((book) => (
                 <motion.li key={book._id} variants={rowVariants}>
-                  <Link href={`/books/${book._id}`}>
+                 
                     <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
                       {/* book */}
                       <div className="flex min-w-0 items-center gap-4">
@@ -220,7 +220,7 @@ export function MyBooksList({ books }: { books: Book[] }) {
                         <DeleteDialog book={book} />
                       </div>
                     </div>
-                  </Link>
+             
                 </motion.li>
               ))}
             </motion.ul>
