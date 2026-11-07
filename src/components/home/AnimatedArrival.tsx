@@ -21,7 +21,7 @@ const AnimatedArrival = ({ books }: { books: Book[] }) => {
     return (
         <motion.div
         variants={gridVariants}
-        initial="hidden"
+        // initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.15 }}
         className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
