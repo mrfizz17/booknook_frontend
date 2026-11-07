@@ -4,7 +4,11 @@ import React from 'react';
 
 const AllBooks = async () => {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books`,
+      {
+        cache:'no-store',
+      }
+    );
 
     const allBooks = await res.json();
     return(
