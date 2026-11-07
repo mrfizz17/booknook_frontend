@@ -26,13 +26,13 @@ export function DeleteDialog({ book }: { book: Book }) {
 
   const handleDelete = async () => {
     const id = book._id;
-    const res = await fetch(`http://localhost:8000/api/my-books/delete/${id}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/delete/${id}`,{
         method:"DELETE"
     })
 
     const data = await res.json();
     console.log(data);
-    toast.success("Deleted Succesfully")
+    toast.success(data.msg)
     router.refresh();
   };
   return (

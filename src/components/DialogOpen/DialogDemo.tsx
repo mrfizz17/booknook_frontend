@@ -19,6 +19,7 @@ import { LogOutIcon } from "lucide-react";
 
 import { redirect, useRouter } from "next/navigation";
 
+
 export function DialogDemo() {
   const router = useRouter();
   const handleLogOut = async () => {
@@ -27,6 +28,7 @@ export function DialogDemo() {
         onSuccess: () => {
           router.push("/login"); 
           // redirect to login page
+          
         },
       },
     });

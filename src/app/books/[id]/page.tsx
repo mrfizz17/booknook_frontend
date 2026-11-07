@@ -13,7 +13,7 @@ export default async function BookDetailsPage({params}:Iparams) {
 
   const {id} = await params;
  
-  const res = await fetch(`http://localhost:8000/api/all-books/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books/${id}`);
   const book:Book= await res.json();
 
   return (

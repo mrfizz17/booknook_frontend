@@ -21,7 +21,7 @@ export default async function MyBooksPage() {
   const email = session?.user?.email;
   // console.log(email);
 
-  const res = await fetch(`http://localhost:8000/api/my-books/${email}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/${email}`);
   const books = await res.json();
 
   // console.log(books);

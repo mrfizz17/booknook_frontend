@@ -38,7 +38,7 @@ export function BorrowTicket({
 
 
   const handlereturn=async ()=>{
-    const res = await fetch(`http://localhost:8000/api/my-borrows/delete/${id}/${email}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-borrows/delete/${id}/${email}`,{
       method:"DELETE"
     });
 

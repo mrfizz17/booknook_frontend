@@ -26,7 +26,7 @@ export function BorrowButton({book}:{book:Book}) {
 
     console.log(updateData)
 
-    const res = await fetch(`http://localhost:8000/api/my-books/borrow/${id}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/borrow/${id}`,{
       method:"POST",
       headers:{
         'Content-type' : 'application/json'

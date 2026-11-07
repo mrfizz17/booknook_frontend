@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { useSession } from "@/lib/auth-client";
+import { redirect, useRouter } from "next/navigation";
+import { router } from "better-auth/api";
 
 
 const categories = [
@@ -28,39 +30,54 @@ const categories = [
   { value: "Others", label: "Others" },
 ];
 
+interface AddBookType {
+  title: string;
+  author: string;
+  category: string;
+  image: string;
+  description: string;
+  addedAt:string;
+  userName?: string;
+  userEmail?: string;
+  count:number
+}
+
 const fieldBase =
   "h-13 w-full rounded-2xl border-border text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
 
 export function AddBookForm() {
-  
   const session = useSession();
+  const router = useRouter();
 
   const userName = session?.data?.user.name;
   const userEmail = session?.data?.user.email;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    
-    const formEntries = new FormData(event.currentTarget);
-    const formData = Object.fromEntries(formEntries.entries());
 
-    const date= new Date()
-    const addedAt =format(date,"d MMMM yyyy")
+    const formEntries = new FormData(event.currentTarget);
+    const formData = Object.fromEntries(formEntries.entries()) as unknown as AddBookType;
+
+    const date = new Date();
+    const addedAt = format(date, "d MMMM yyyy");
+
 
     formData.addedAt = addedAt;
+    formData.count=Number(formData.count);
 
     console.log(formData);
 
-    const res = await fetch("http://localhost:8000/api/add-books",{
-      method:"POST",
-      headers:{
-        'Content-Type': 'application/json'
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/add-books`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(formData)
-    })
+      body: JSON.stringify(formData),
+    });
 
     const data = await res.json();
-    console.log(data)
+    toast.success(data.msg);
+    router.push("/my-books");
   }
 
   return (
@@ -95,36 +112,46 @@ export function AddBookForm() {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
-          <Select
-            items={categories}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="book-title">No of Copies</Label>
+            <Input
+              id="book-count"
+              name="count"
+              type="value"
+              placeholder="e.g. 5"
+              className={cn(fieldBase, "bg-paper")}
+            />
+          </div>
 
-            name="category"
-       
-          >
-            <SelectTrigger
-              id="category"
-              className={cn(
-                fieldBase,
-                "justify-between bg-paper px-4 data-placeholder:text-muted-foreground/70"
-              )}
-            >
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent className="rounded-2xl border border-border bg-card p-1 shadow-xl">
-              {categories.map((item) => (
-                <SelectItem
-                  key={item.value}
-                  value={item.value}
-                  className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
-                >
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <Select items={categories} name="category">
+              <SelectTrigger
+                id="category"
+                className={cn(
+                  fieldBase,
+                  "justify-between py-6  bg-paper px-4 data-placeholder:text-muted-foreground/70",
+                )}
+              >
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl  border border-border bg-card p-1 shadow-xl">
+                {categories.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
+
+        
 
         <div className="space-y-2">
           <Label htmlFor="book-image">Book Image URL</Label>
@@ -137,8 +164,6 @@ export function AddBookForm() {
               id="book-image"
               type="url"
               name="image"
-              
-            
               placeholder="https://i.ibb.co/your-book-cover.jpg"
               className={cn(fieldBase, "bg-paper pl-11")}
             />
@@ -149,9 +174,7 @@ export function AddBookForm() {
           <Label htmlFor="description">Short Description</Label>
           <Textarea
             id="description"
-          
             name="description"
-        
             placeholder="What is this book about?"
             className="min-h-[140px] resize-none rounded-2xl border-border bg-paper px-4 py-3 text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
           />
@@ -169,7 +192,7 @@ export function AddBookForm() {
                 aria-readonly
                 className={cn(
                   fieldBase,
-                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0"
+                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
                 )}
               />
               <LockKeyholeIcon
@@ -191,7 +214,7 @@ export function AddBookForm() {
                 aria-readonly
                 className={cn(
                   fieldBase,
-                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0"
+                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
                 )}
               />
               <LockKeyholeIcon

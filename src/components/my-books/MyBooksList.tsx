@@ -112,8 +112,7 @@ export function MyBooksList({ books }: { books: Book[] }) {
             </nav>
 
             <h1 className="mt-4 font-heading text-4xl leading-[1.05] font-semibold tracking-tight text-paper">
-              Books I have{" "}
-              <span className="text-amber italic">shared</span>
+              Books I have <span className="text-amber italic">shared</span>
             </h1>
 
             <p className="mt-3 text-sm text-paper/65 sm:text-base">
@@ -123,18 +122,15 @@ export function MyBooksList({ books }: { books: Book[] }) {
 
           <div className="shrink-0">
             <Link href={"/add-book"}>
-            <Button
-              className="group relative h-11 overflow-hidden rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] transition-transform hover:bg-[#F2B157] hover:text-[#16202D]"
-            >
-              <PlusIcon className="size-4" strokeWidth={2.4} />
-              Add New Book
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-y-0 left-0 w-1/2 animate-shine bg-linear-to-r from-transparent via-white/45 to-transparent"
-              />
-            </Button>
+              <Button className="group relative h-11 overflow-hidden rounded-full bg-amber px-6 text-sm font-semibold text-[#16202D] shadow-[0_14px_34px_-14px_rgba(232,163,61,0.95)] transition-transform hover:bg-[#F2B157] hover:text-[#16202D]">
+                <PlusIcon className="size-4" strokeWidth={2.4} />
+                Add New Book
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 left-0 w-1/2 animate-shine bg-linear-to-r from-transparent via-white/45 to-transparent"
+                />
+              </Button>
             </Link>
-            
           </div>
         </div>
       </section>
@@ -187,43 +183,44 @@ export function MyBooksList({ books }: { books: Book[] }) {
             >
               {books.map((book) => (
                 <motion.li key={book._id} variants={rowVariants}>
-                  <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
-                    {/* book */}
-                    <div className="flex min-w-0 items-center gap-4">
-                      <BookCover book={book} />
-                      <div className="min-w-0">
-                        <h3 className="truncate font-heading text-base font-semibold text-ink sm:text-lg">
-                          {book.title}
-                        </h3>
-                        <p className="mt-0.5 truncate text-xs text-[#6B7685]">
-                          by {book.author}
-                        </p>
+                  <Link href={`/books/${book._id}`}>
+                    <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
+                      {/* book */}
+                      <div className="flex min-w-0 items-center gap-4">
+                        <BookCover book={book} />
+                        <div className="min-w-0">
+                          <h3 className="truncate font-heading text-base font-semibold text-ink sm:text-lg">
+                            {book.title}
+                          </h3>
+                          <p className="mt-0.5 truncate text-xs text-[#6B7685]">
+                            by {book.author}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* category */}
+                      <div>
+                        <Badge
+                          variant="secondary"
+                          className="rounded-full bg-[#FBE9C6] px-3 py-1 text-xs font-medium text-[#7A4F0C]"
+                        >
+                          {book.category}
+                        </Badge>
+                      </div>
+
+                      {/* added on */}
+                      <div className="text-sm text-[#5A6675]">
+                        <span className="md:hidden">Added </span>
+                        {book.addedAt}
+                      </div>
+
+                      {/* actions */}
+                      <div className="flex items-center justify-start gap-2 md:justify-end">
+                        <EditDialog book={book} />
+                        <DeleteDialog book={book} />
                       </div>
                     </div>
-
-                    {/* category */}
-                    <div>
-                      <Badge
-                        variant="secondary"
-                        className="rounded-full bg-[#FBE9C6] px-3 py-1 text-xs font-medium text-[#7A4F0C]"
-                      >
-                        {book.category}
-                      </Badge>
-                    </div>
-
-                    {/* added on */}
-                    <div className="text-sm text-[#5A6675]">
-                      <span className="md:hidden">Added </span>
-                      {formatAddedOn(book.addedAt)}
-                    </div>
-
-                    {/* actions */}
-                    <div className="flex items-center justify-start gap-2 md:justify-end">
-
-                      <EditDialog book={book}/>
-                      <DeleteDialog  book={book}/>
-                    </div>
-                  </div>
+                  </Link>
                 </motion.li>
               ))}
             </motion.ul>
