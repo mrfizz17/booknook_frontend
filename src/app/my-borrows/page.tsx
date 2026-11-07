@@ -20,7 +20,7 @@ export default async function MyBorrowsPage() {
 
   const email = session?.user.email;
 
-  const res = await fetch(`http:localhost:8000/api/my-borrowed/${email}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-borrowed/${email}`)
   const borrowedBooks = await res.json();
 
 
