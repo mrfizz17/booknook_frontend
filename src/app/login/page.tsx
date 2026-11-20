@@ -45,10 +45,10 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>;
 
 const inputGroupBase =
-  "h-12 rounded-2xl border-[#E9E2D6] bg-[#FBF8F3] [&_input]:h-full has-[[data-slot=input-group-control]:focus-visible]:border-amber has-[[data-slot=input-group-control]:focus-visible]:ring-4 has-[[data-slot=input-group-control]:focus-visible]:ring-amber/20";
+  "h-12 rounded-2xl border-border bg-background [&_input]:h-full has-[[data-slot=input-group-control]:focus-visible]:border-amber has-[[data-slot=input-group-control]:focus-visible]:ring-4 has-[[data-slot=input-group-control]:focus-visible]:ring-amber/20";
 
 const inputGroupError =
-  "border-[#C8553D] bg-[#FFF7F5] has-[[data-slot][aria-invalid=true]]:border-[#C8553D] has-[[data-slot][aria-invalid=true]]:ring-[#C8553D]/20 has-[[data-slot=input-group-control]:focus-visible]:border-[#C8553D] has-[[data-slot=input-group-control]:focus-visible]:ring-[#C8553D]/15";
+  "border-destructive bg-destructive/10 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot=input-group-control]:focus-visible]:border-destructive has-[[data-slot=input-group-control]:focus-visible]:ring-destructive/15";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -144,9 +144,9 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-          className="mx-auto w-full max-w-[520px] rounded-[32px] border border-[#E9E2D6] bg-white p-6 shadow-[0_32px_70px_-36px_rgba(30,42,58,0.35)] sm:p-10"
+          className="mx-auto w-full max-w-[520px] rounded-[32px] border border-border bg-card p-6 shadow-[0_32px_70px_-36px_rgba(30,42,58,0.35)] sm:p-10"
         >
-          <h1 className="font-heading text-[34px] leading-tight font-semibold tracking-tight text-ink">
+          <h1 className="font-heading text-[34px] leading-tight font-semibold tracking-tight text-foreground">
             Login
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
@@ -158,7 +158,7 @@ export default function LoginPage() {
               <Field className="gap-2">
                 <FieldLabel
                   htmlFor="email"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Email
                 </FieldLabel>
@@ -184,7 +184,7 @@ export default function LoginPage() {
                 {errors.email?.message && (
                   <FieldError
                     id="email-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon
                       aria-hidden
@@ -198,7 +198,7 @@ export default function LoginPage() {
               <Field className="gap-2">
                 <FieldLabel
                   htmlFor="password"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Password
                 </FieldLabel>
@@ -237,7 +237,7 @@ export default function LoginPage() {
                 {errors.password?.message && (
                   <FieldError
                     id="password-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon
                       aria-hidden
@@ -260,18 +260,18 @@ export default function LoginPage() {
               </Button>
 
               <div className="flex items-center gap-3">
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
+                <span className="h-px flex-1 bg-border" />
                 <span className="text-xs text-muted-foreground">
                   or continue with
                 </span>
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
+                <span className="h-px flex-1 bg-border" />
               </div>
 
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleGoogleSignUp}
-                className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-md font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
+                className="h-14 w-full rounded-full border border-border bg-card text-md font-semibold text-foreground shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted/50 hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
               >
                 <FcGoogle/>
                 Continue with Google
@@ -281,7 +281,7 @@ export default function LoginPage() {
                 New to BookNook?{" "}
                 <Link
                   href="/register"
-                  className="font-semibold text-[#B7791F] transition-colors hover:text-amber hover:underline"
+                  className="font-semibold text-highlight-foreground transition-colors hover:text-amber hover:underline"
                 >
                   Register
                 </Link>

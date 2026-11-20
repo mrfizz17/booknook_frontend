@@ -66,11 +66,11 @@ export function BorrowTicket({
       }}
       whileHover={reduceMotion ? undefined : { y: -6 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="group grid grid-cols-1 overflow-hidden rounded-[28px] border border-[#E9E2D6] bg-white shadow-[0_18px_45px_-30px_rgba(30,42,58,0.4)] transition-shadow duration-300 hover:shadow-[0_38px_70px_-32px_rgba(30,42,58,0.45)] md:grid-cols-[200px_1fr_360px]"
+      className="group grid grid-cols-1 overflow-hidden rounded-[28px] border border-border bg-card shadow-[0_18px_45px_-30px_rgba(30,42,58,0.4)] transition-shadow duration-300 hover:shadow-[0_38px_70px_-32px_rgba(30,42,58,0.45)] dark:bg-ink md:grid-cols-[200px_1fr_360px]"
     >
       {/* Cover */}
-      <div className="flex items-center justify-center border-b border-dashed border-[#E3D9C6] bg-[#F7F1E5] px-6 py-8 md:border-r md:border-b-0">
-        <div className="h-[128px] w-[90px] shrink-0 rotate-[-5deg] overflow-hidden rounded-r-xl bg-[#F1EBDF] shadow-[0_16px_24px_-12px_rgba(30,42,58,0.55)] ring-1 ring-black/5 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:rotate-0">
+      <div className="flex items-center justify-center border-b border-dashed border-border bg-muted px-6 py-8 md:border-r md:border-b-0">
+        <div className="h-[128px] w-[90px] shrink-0 rotate-[-5deg] overflow-hidden rounded-r-xl bg-tint shadow-[0_16px_24px_-12px_rgba(30,42,58,0.55)] ring-1 ring-black/5 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:rotate-0">
           
             <Image
               src={book.image}
@@ -85,17 +85,17 @@ export function BorrowTicket({
       </div>
 
       {/* Details */}
-      <div className="flex min-w-0 flex-col justify-center border-b border-dashed border-[#E3D9C6] px-7 py-6 md:border-r md:border-b-0">
+      <div className="flex min-w-0 flex-col justify-center border-b border-dashed border-border px-7 py-6 md:border-r md:border-b-0">
         <Badge
-          variant="secondary"
-          className="h-auto rounded-full bg-[#FBE9C6] px-3 py-1 text-xs font-medium text-[#7A4F0C]"
+          variant="outline"
+          className="h-auto rounded-full bg-highlight px-3 py-1 text-xs font-medium text-highlight-foreground"
         >
           {book.category}
         </Badge>
-        <h2 className="mt-3 font-heading text-2xl leading-snug font-semibold text-ink">
+        <h2 className="mt-3 font-heading text-2xl leading-snug font-semibold text-foreground">
           {book.title}
         </h2>
-        <p className="mt-1 text-sm text-[#6B7685]">by {book.author}</p>
+        <p className="mt-1 text-sm text-muted-foreground">by {book.author}</p>
       </div>
 
       {/* Actions */}
@@ -103,7 +103,7 @@ export function BorrowTicket({
         <Link href={`/books/${book.OldId}`}>
           <Button
           variant="outline"
-          className="h-11 rounded-full border-[#E9E2D6] bg-white px-6 text-sm font-medium text-ink hover:bg-[#FBF4E6] hover:text-ink"
+          className="h-11 rounded-full border-border bg-card px-6 text-sm font-medium text-foreground hover:bg-subtle hover:text-foreground"
         >
           Details
         </Button>
@@ -112,7 +112,7 @@ export function BorrowTicket({
         
         <Button
           onClick={handlereturn}
-          className="h-11 flex-1 rounded-full bg-[#1E2A3A] text-sm font-semibold text-paper transition-colors duration-300 group-hover:bg-[#E8A33D] hover:bg-[#E8A33D] hover:text-ink group-hover:text-[#1E2A3A]"
+          className="h-11 flex-1 rounded-full bg-foreground text-sm font-semibold text-background transition-colors duration-300 group-hover:bg-amber hover:bg-amber hover:text-dark group-hover:text-dark"
         >
           <Undo2Icon className="size-4" strokeWidth={2.2} />
           Return Book

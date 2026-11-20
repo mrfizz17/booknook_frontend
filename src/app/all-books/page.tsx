@@ -55,7 +55,7 @@ const AllBooks = async () => {
           <h2 className="mt-2 font-heading text-4xl font-semibold tracking-tight text-white">
             All Books
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-paper/65">
             The latest books added by our readers.
           </p>
         </div>

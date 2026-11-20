@@ -30,14 +30,14 @@ function BookCover({ book }: { book: Book }) {
 
   if (failed) {
     return (
-      <div className="flex h-[72px] w-[52px] shrink-0 items-center justify-center rounded-lg bg-[#F1EBDF] text-[#7A6A52]">
+      <div className="flex h-[72px] w-[52px] shrink-0 items-center justify-center rounded-lg bg-tint text-tint-foreground">
         <BookOpenIcon className="size-5" strokeWidth={1.8} />
       </div>
     );
   }
 
   return (
-    <div className="h-[72px] w-[52px] shrink-0 overflow-hidden rounded-lg bg-[#F1EBDF] shadow-[0_10px_18px_-8px_rgba(30,42,58,0.55)] ring-1 ring-black/5">
+    <div className="h-[72px] w-[52px] shrink-0 overflow-hidden rounded-lg bg-tint shadow-[0_10px_18px_-8px_rgba(30,42,58,0.55)] ring-1 ring-black/5">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={book.image}
@@ -136,16 +136,16 @@ export function MyBooksList({ books }: { books: Book[] }) {
       </section>
 
       {/* List card */}
-      <section className="relative z-10 mx-auto -mt-12 w-full max-w-[1200px] rounded-[32px] border border-[#E9E2D6] bg-white p-5 shadow-[0_36px_90px_-40px_rgba(30,42,58,0.38)] sm:p-8">
+      <section className="relative z-10 mx-auto -mt-12 w-full max-w-[1200px] rounded-[32px] border border-border bg-card p-5 shadow-[0_36px_90px_-40px_rgba(30,42,58,0.38)] dark:bg-ink sm:p-8">
         {books.length === 0 ? (
           <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-            <span className="flex size-14 items-center justify-center rounded-full bg-[#F1EBDF] text-[#7A6A52]">
+            <span className="flex size-14 items-center justify-center rounded-full bg-tint text-tint-foreground">
               <BookOpenIcon className="size-6" strokeWidth={1.8} />
             </span>
-            <h2 className="mt-4 font-heading text-xl font-semibold text-ink">
+            <h2 className="mt-4 font-heading text-xl font-semibold text-foreground">
               No books on your shelf yet
             </h2>
-            <p className="mt-1 max-w-sm text-sm text-[#6B7685]">
+            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
               Share a book you love and it will show up here for the whole
               neighborhood to discover.
             </p>
@@ -161,16 +161,16 @@ export function MyBooksList({ books }: { books: Book[] }) {
           <>
             {/* header */}
             <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-10 px-3 pb-4 md:grid">
-              <span className="text-[11px] font-semibold tracking-[0.18em] text-[#8A94A3] uppercase">
+              <span className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                 Book
               </span>
-              <span className="text-[11px] font-semibold tracking-[0.18em] text-[#8A94A3] uppercase">
+              <span className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                 Category
               </span>
-              <span className="text-[11px] font-semibold tracking-[0.18em] text-[#8A94A3] uppercase">
+              <span className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                 Added on
               </span>
-              <span className="text-right text-[11px] font-semibold tracking-[0.18em] text-[#8A94A3] uppercase">
+              <span className="text-right text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                 Actions
               </span>
             </div>
@@ -184,15 +184,15 @@ export function MyBooksList({ books }: { books: Book[] }) {
               {books.map((book:Book) => (
                 <motion.li key={book._id} variants={rowVariants}>
                  
-                    <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
+                    <div className="grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-subtle dark:bg-ink md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">
                       {/* book */}
                       <div className="flex min-w-0 items-center gap-4">
                         <BookCover book={book} />
                         <div className="min-w-0">
-                          <h3 className="truncate font-heading text-base font-semibold text-ink sm:text-lg">
+                          <h3 className="truncate font-heading text-base font-semibold text-foreground sm:text-lg">
                             {book.title}
                           </h3>
-                          <p className="mt-0.5 truncate text-xs text-[#6B7685]">
+                          <p className="mt-0.5 truncate text-xs text-muted-foreground">
                             by {book.author}
                           </p>
                         </div>
@@ -201,15 +201,15 @@ export function MyBooksList({ books }: { books: Book[] }) {
                       {/* category */}
                       <div>
                         <Badge
-                          variant="secondary"
-                          className="rounded-full bg-[#FBE9C6] px-3 py-1 text-xs font-medium text-[#7A4F0C]"
+                          variant="outline"
+                          className="rounded-full bg-highlight px-3 py-1 text-xs font-medium text-highlight-foreground"
                         >
                           {book.category}
                         </Badge>
                       </div>
 
                       {/* added on */}
-                      <div className="text-sm text-[#5A6675]">
+                      <div className="text-sm text-muted-foreground">
                         <span className="md:hidden">Added </span>
                         {book.addedAt}
                       </div>

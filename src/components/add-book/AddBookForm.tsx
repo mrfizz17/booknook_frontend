@@ -42,7 +42,7 @@ interface AddBookType {
 }
 
 const fieldBase =
-  "h-13 w-full rounded-2xl border-border text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
+  "h-13 w-full rounded-2xl border-border text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
 
 export function AddBookForm() {
   const session = useSession();
@@ -93,7 +93,7 @@ export function AddBookForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <h2 className="font-heading text-3xl font-semibold tracking-tight text-ink sm:text-[34px]">
+      <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[34px]">
         Book details
       </h2>
       <p className="mt-1.5 text-sm text-muted-foreground">
@@ -108,7 +108,7 @@ export function AddBookForm() {
               id="book-title"
               name="title"
               placeholder="e.g. The Great Gatsby"
-              className={cn(fieldBase, "bg-paper")}
+              className={cn(fieldBase, "bg-background")}
             />
           </div>
 
@@ -118,7 +118,7 @@ export function AddBookForm() {
               id="author-name"
               name="author"
               placeholder="e.g. F. Scott Fitzgerald"
-              className={cn(fieldBase, "bg-paper")}
+              className={cn(fieldBase, "bg-background")}
             />
           </div>
         </div>
@@ -131,7 +131,7 @@ export function AddBookForm() {
               name="count"
               type="value"
               placeholder="e.g. 5"
-              className={cn(fieldBase, "bg-paper")}
+              className={cn(fieldBase, "bg-background")}
             />
           </div>
 
@@ -142,7 +142,7 @@ export function AddBookForm() {
                 id="category"
                 className={cn(
                   fieldBase,
-                  "justify-between py-6  bg-paper px-4 data-placeholder:text-muted-foreground/70",
+                  "justify-between py-6  bg-background px-4 data-placeholder:text-muted-foreground/70",
                 )}
               >
                 <SelectValue placeholder="Select a category" />
@@ -152,7 +152,7 @@ export function AddBookForm() {
                   <SelectItem
                     key={item.value}
                     value={item.value}
-                    className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
+                    className="rounded-xl px-3 py-2 text-sm focus:bg-muted"
                   >
                     {item.label}
                   </SelectItem>
@@ -174,7 +174,7 @@ export function AddBookForm() {
               type="url"
               name="image"
               placeholder="https://i.ibb.co/your-book-cover.jpg"
-              className={cn(fieldBase, "bg-paper pl-11")}
+              className={cn(fieldBase, "bg-background pl-11")}
             />
           </div>
         </div>
@@ -185,7 +185,7 @@ export function AddBookForm() {
             id="description"
             name="description"
             placeholder="What is this book about?"
-            className="min-h-[140px] resize-none rounded-2xl border-border bg-paper px-4 py-3 text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
+            className="min-h-[140px] resize-none rounded-2xl border-border bg-background px-4 py-3 text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
           />
         </div>
 
@@ -201,7 +201,7 @@ export function AddBookForm() {
                 aria-readonly
                 className={cn(
                   fieldBase,
-                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                  "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                 )}
               />
               <LockKeyholeIcon
@@ -223,7 +223,7 @@ export function AddBookForm() {
                 aria-readonly
                 className={cn(
                   fieldBase,
-                  "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                  "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                 )}
               />
               <LockKeyholeIcon

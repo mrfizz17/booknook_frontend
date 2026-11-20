@@ -8,6 +8,7 @@ import { BookOpenIcon, LogOutIcon, MenuIcon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DialogDemo} from "@/components/DialogOpen/DialogDemo";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "cn";
 import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 
 // TODO: swap for real session state once auth is wired up.
@@ -47,7 +49,7 @@ function isActive(pathname: string, href: string) {
 
 function Logo() {
   return (
-    <Link href="/" className="group flex items-center gap-2 text-ink">
+    <Link href="/" className="group flex items-center gap-2 text-foreground">
       <span className="flex size-8 items-center justify-center rounded-lg bg-amber text-dark shadow-sm transition-transform group-hover:-rotate-6">
         <BookOpenIcon className="size-4" strokeWidth={2.2} />
       </span>
@@ -66,12 +68,31 @@ export function Navbar() {
   const [openDialog , setOpenDialog] = useState(false);
 
 
+
   const isLoggedIn = session?.data?.user;
+
+ const profilePicOrChar = session?.data?.user ? (
+  session.data.user.image ? (
+    <Image
+      src={session.data.user.image}
+      alt="Profile picture"
+      className="rounded-full"
+      height={50}
+      width={50}
+    />
+  ) : (
+    session.data.user.name?.charAt(0).toUpperCase() || 'U'
+  )
+) : (
+  'G'
+)
+
+  console.log(profilePicOrChar)
 
   const links = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-paper/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Logo />
 
@@ -88,8 +109,8 @@ export function Navbar() {
                 className={cn(
                   "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
                   active
-                    ? "bg-dark text-paper"
-                    : "text-muted-foreground hover:bg-cream hover:text-ink",
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 {link.label}
@@ -99,6 +120,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <ThemeToggle />
           {isLoggedIn ? (
             <>
               <DropdownMenu>
@@ -114,7 +136,9 @@ export function Navbar() {
               >
                 <Avatar>
                   <AvatarFallback className="bg-amber text-xs font-semibold text-paper">
-                    {session?.data?.user.name.charAt(0)}
+
+                    {profilePicOrChar}
+                   
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -161,6 +185,8 @@ export function Navbar() {
           )}
         </div>
 
+        <ThemeToggle className="ml-auto lg:hidden" />
+
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger
             render={
@@ -192,8 +218,8 @@ export function Navbar() {
                     className={cn(
                       "rounded-full px-4 py-2 text-sm font-medium transition-colors",
                       active
-                        ? "bg-dark text-paper"
-                        : "text-muted-foreground hover:bg-cream hover:text-ink",
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
                     )}
                   >
                     {link.label}

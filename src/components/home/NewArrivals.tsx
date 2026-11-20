@@ -20,7 +20,7 @@ export async function NewArrivals({book}:{book:Book[]}) {
           <p className="text-xs font-semibold tracking-[0.2em] text-amber uppercase">
             Fresh on the shelf
           </p>
-          <h2 className="mt-2 font-heading text-4xl font-semibold tracking-tight text-ink">
+          <h2 className="mt-2 font-heading text-4xl font-semibold tracking-tight text-foreground">
             New Arrivals
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">

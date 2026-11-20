@@ -50,17 +50,17 @@ export function DeleteDialog({ book }: { book: Book }) {
           <Button
             variant="destructive"
             size="icon-lg"
-            className="rounded-xl  border-transparent bg-[#FDF0EC] text-[#C8553D] hover:bg-[#FADDD5] hover:text-[#A8442F]"
+            className="rounded-xl  border-transparent bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive"
           >
             <Trash2Icon className="size-6" />
           </Button>
         }
       />
-      <DialogContent className="sm:max-w-md bg-accent-foreground">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           {/* <DialogTitle>Are You Sure to Delete This Book ?</DialogTitle> */}
         
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-red-600 sm:text-[34px]">
+          <h2 className="font-heading text-3xl font-semibold tracking-tight text-destructive sm:text-[34px]">
             Are You Sure to Delete ?
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground">

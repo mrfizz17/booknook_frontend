@@ -8,6 +8,7 @@ import {
   AlertCircleIcon,
   EyeIcon,
   EyeOffIcon,
+  ImageIcon,
   LockIcon,
   MailIcon,
   UserIcon,
@@ -32,15 +33,45 @@ import {
 import { authClient, signIn, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
+
+const passwordRules = [
+  { label: "at least 6 characters", test: (value: string) => value.length >= 6 },
+  { label: "an uppercase letter", test: (value: string) => /[A-Z]/.test(value) },
+  { label: "a lowercase letter", test: (value: string) => /[a-z]/.test(value) },
+] as const;
+
+const passwordSchema = z.string().superRefine((value, ctx) => {
+  const unmet = passwordRules.filter((rule) => !rule.test(value));
+  if (unmet.length > 0) {
+    ctx.addIssue({
+      code: "custom",
+      message: `Password must include ${unmet
+        .map((rule) => rule.label)
+        .join(", ")}`,
+    });
+  }
+});
 
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
+    image: z
+      .literal("")
+      .or(
+        z
+          .url("Enter a valid image URL")
+          .refine(
+            (value) => /^https?:\/\//i.test(value),
+            "Enter a valid image URL"
+          )
+      )
+      .optional(),
     email: z
       .string()
       .min(1, "Email is required")
       .email("Enter a valid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: passwordSchema,
     confirmPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((values) => values.password === values.confirmPassword, {
@@ -51,10 +82,10 @@ const registerSchema = z
 type RegisterValues = z.infer<typeof registerSchema>;
 
 const inputGroupBase =
-  "h-12 rounded-2xl border-[#E9E2D6] bg-[#FBF8F3] [&_input]:h-full has-[[data-slot=input-group-control]:focus-visible]:border-amber has-[[data-slot=input-group-control]:focus-visible]:ring-4 has-[[data-slot=input-group-control]:focus-visible]:ring-amber/20";
+  "h-12 rounded-2xl border-border bg-background [&_input]:h-full has-[[data-slot=input-group-control]:focus-visible]:border-amber has-[[data-slot=input-group-control]:focus-visible]:ring-4 has-[[data-slot=input-group-control]:focus-visible]:ring-amber/20";
 
 const inputGroupError =
-  "border-[#C8553D] bg-[#FFF7F5] has-[[data-slot][aria-invalid=true]]:border-[#C8553D] has-[[data-slot][aria-invalid=true]]:ring-[#C8553D]/20 has-[[data-slot=input-group-control]:focus-visible]:border-[#C8553D] has-[[data-slot=input-group-control]:focus-visible]:ring-[#C8553D]/15";
+  "border-destructive bg-destructive/10 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot=input-group-control]:focus-visible]:border-destructive has-[[data-slot=input-group-control]:focus-visible]:ring-destructive/15";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -68,6 +99,7 @@ export default function RegisterPage() {
     mode: "onBlur",
     defaultValues: {
       name: "",
+      image: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -76,22 +108,20 @@ export default function RegisterPage() {
 
   const router = useRouter();
 
-  const onSubmit = async (values:RegisterValues) => {
+  const onSubmit = async (values: RegisterValues) => {
+    const { error } = await signUp.email({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      image: values.image || undefined,
+    });
 
-
-    const {data,error}= await signUp.email({
-      name:values.name as string,
-      email:values.email as string,
-      password:values.password as string,
-    })
-
-    if(error){
-      console.log(error.message);
+    if (error) {
+      toast.error(error.message || "Could not create your account");
+      return;
     }
 
-    router.push("/login")
-
-    console.log(data);
+    router.push("/login");
   };
 
   const handleGoogleSignUp=async ()=>{
@@ -152,9 +182,9 @@ export default function RegisterPage() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-          className="mx-auto w-full max-w-[520px] rounded-[32px] border border-[#E9E2D6] bg-white p-6 shadow-[0_32px_70px_-36px_rgba(30,42,58,0.35)] sm:p-10"
+          className="mx-auto w-full max-w-[520px] rounded-[32px] border border-border bg-card p-6 shadow-[0_32px_70px_-36px_rgba(30,42,58,0.35)] sm:p-10"
         >
-          <h1 className="font-heading text-[34px] leading-tight font-semibold tracking-tight text-ink">
+          <h1 className="font-heading text-[34px] leading-tight font-semibold tracking-tight text-foreground">
             Register
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
@@ -172,7 +202,7 @@ export default function RegisterPage() {
               <Field className="gap-2">
                 <FieldLabel
                   htmlFor="name"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Full name
                 </FieldLabel>
@@ -198,7 +228,7 @@ export default function RegisterPage() {
                 {errors.name?.message && (
                   <FieldError
                     id="name-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
                     {errors.name.message}
@@ -208,8 +238,48 @@ export default function RegisterPage() {
 
               <Field className="gap-2">
                 <FieldLabel
+                  htmlFor="image"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Photo URL{" "}
+                  <span className="font-normal text-muted-foreground">
+                    (optional)
+                  </span>
+                </FieldLabel>
+                <InputGroup
+                  className={cn(
+                    inputGroupBase,
+                    errors.image && inputGroupError
+                  )}
+                >
+                  <InputGroupAddon align="inline-start" className="pl-4">
+                    <ImageIcon />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    id="image"
+                    type="url"
+                    autoComplete="url"
+                    placeholder="https://example.com/photo.jpg"
+                    aria-invalid={!!errors.image}
+                    aria-describedby={errors.image ? "image-error" : undefined}
+                    {...register("image")}
+                  />
+                </InputGroup>
+                {errors.image?.message && (
+                  <FieldError
+                    id="image-error"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
+                  >
+                    <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
+                    {errors.image.message}
+                  </FieldError>
+                )}
+              </Field>
+
+              <Field className="gap-2">
+                <FieldLabel
                   htmlFor="email"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Email
                 </FieldLabel>
@@ -237,7 +307,7 @@ export default function RegisterPage() {
                 {errors.email?.message && (
                   <FieldError
                     id="email-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
                     {errors.email.message}
@@ -248,7 +318,7 @@ export default function RegisterPage() {
               <Field className="gap-2">
                 <FieldLabel
                   htmlFor="password"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Password
                 </FieldLabel>
@@ -268,7 +338,9 @@ export default function RegisterPage() {
                     placeholder="••••••••"
                     aria-invalid={!!errors.password}
                     aria-describedby={
-                      errors.password ? "password-error" : undefined
+                      errors.password
+                        ? "password-hint password-error"
+                        : "password-hint"
                     }
                     {...register("password")}
                   />
@@ -284,10 +356,17 @@ export default function RegisterPage() {
                     </InputGroupButton>
                   </InputGroupAddon>
                 </InputGroup>
+                <p
+                  id="password-hint"
+                  className="text-xs text-muted-foreground"
+                >
+                  At least 6 characters, including an uppercase and a lowercase
+                  letter.
+                </p>
                 {errors.password?.message && (
                   <FieldError
                     id="password-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
                     {errors.password.message}
@@ -298,7 +377,7 @@ export default function RegisterPage() {
               <Field className="gap-2">
                 <FieldLabel
                   htmlFor="confirm-password"
-                  className="text-sm font-medium text-ink"
+                  className="text-sm font-medium text-foreground"
                 >
                   Confirm password
                 </FieldLabel>
@@ -343,7 +422,7 @@ export default function RegisterPage() {
                 {errors.confirmPassword?.message && (
                   <FieldError
                     id="confirm-password-error"
-                    className="flex items-center gap-1.5 text-xs font-medium text-[#B23A1E]"
+                    className="flex items-center gap-1.5 text-xs font-medium text-destructive"
                   >
                     <AlertCircleIcon aria-hidden className="size-3.5 shrink-0" />
                     {errors.confirmPassword.message}
@@ -363,18 +442,18 @@ export default function RegisterPage() {
               </Button>
 
               <div className="flex items-center gap-3">
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
+                <span className="h-px flex-1 bg-border" />
                 <span className="text-xs text-muted-foreground">
                   or continue with
                 </span>
-                <span className="h-px flex-1 bg-[#E9E2D6]" />
+                <span className="h-px flex-1 bg-border" />
               </div>
 
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleGoogleSignUp}
-                className="h-14 w-full rounded-full border border-[#E9E2D6] bg-white text-sm font-semibold text-ink shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E9E2D6] hover:bg-white hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
+                className="h-14 w-full rounded-full border border-border bg-card text-sm font-semibold text-foreground shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted/50 hover:shadow-[0_12px_24px_-14px_rgba(30,42,58,0.4)] focus-visible:border-amber focus-visible:ring-4 focus-visible:ring-amber/20"
               >
                 <FcGoogle />
                 Continue with Google
@@ -384,7 +463,7 @@ export default function RegisterPage() {
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="font-semibold text-[#B7791F] transition-colors hover:text-amber hover:underline"
+                  className="font-semibold text-highlight-foreground transition-colors hover:text-amber hover:underline"
                 >
                   Login
                 </Link>

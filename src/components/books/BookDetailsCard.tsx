@@ -35,10 +35,10 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
 
   return (
-    <Card className="mx-auto w-full max-w-[1200px] rounded-[32px] border border-[#E9E2D6] bg-white p-7 shadow-[0_30px_80px_-40px_rgba(30,42,58,0.35)] ring-0">
+    <Card className="mx-auto w-full max-w-[1200px] rounded-[32px] border border-border bg-card p-7 shadow-[0_30px_80px_-40px_rgba(30,42,58,0.35)] ring-0">
       <div className="grid gap-7 md:grid-cols-[400px_1fr]">
         {/* Book cover */}
-        <div className="flex min-h-[500px] items-center justify-center rounded-3xl bg-[#F1EBDF] p-6">
+        <div className="flex min-h-[500px] items-center justify-center rounded-3xl bg-tint p-6">
           {book.image ? (
             <Image
               src={book.image}
@@ -48,7 +48,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
               className=" w-70 rounded-r-2xl object-cover shadow-xl"
             />
           ) : (
-            <div className="flex aspect-[3/4] w-60 items-center justify-center rounded-r-2xl bg-[#F1EBDF] text-muted-foreground shadow-xl">
+            <div className="flex aspect-[3/4] w-60 items-center justify-center rounded-r-2xl bg-tint text-muted-foreground shadow-xl">
               <BookOpenIcon className="size-12" />
             </div>
           )}
@@ -56,21 +56,21 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
         {/* Book information */}
         <div className="flex flex-col">
-          <Badge className="h-auto w-fit bg-[#FBE9C6] px-3 py-1 text-xs font-medium text-[#7A4F0C]">
+          <Badge variant="outline" className="h-auto w-fit bg-highlight px-3 py-1 text-xs font-medium text-highlight-foreground">
             {book.category}
           </Badge>
 
-          <h1 className="mt-4 font-heading text-4xl leading-tight font-semibold tracking-tight text-ink sm:text-5xl">
+          <h1 className="mt-4 font-heading text-4xl leading-tight font-semibold tracking-tight text-foreground sm:text-5xl">
             {book.title}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             by {book.author}
           </p>
 
-          <Separator className="my-6 bg-[#E9E2D6]" />
+          <Separator className="my-6 bg-border" />
 
           {/* About this book */}
-          <p className="text-xs font-semibold tracking-[0.18em] text-[#B7791F] uppercase">
+          <p className="text-xs font-semibold tracking-[0.18em] text-highlight-foreground uppercase">
             About this book
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -79,7 +79,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
 
           {/* Info tiles */}
           <div className="mt-7 grid gap-4 sm:grid-cols-3">
-            <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-background p-4">
               <Avatar>
                 <AvatarFallback className="bg-teal font-semibold text-paper">
                   {initials}
@@ -89,23 +89,23 @@ export function BookDetailsCard({ book }: { book: Book }) {
                 <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
                   Added by
                 </p>
-                <p className="text-sm font-semibold text-ink">{userName}</p>
+                <p className="text-sm font-semibold text-foreground">{userName}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-[#FBE9C6] text-[#7A4F0C]">
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-background p-4">
+              <span className="flex size-9 items-center justify-center rounded-xl bg-highlight text-highlight-foreground">
                 <CalendarIcon className="size-6" />
               </span>
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
                   Added on
                 </p>
-                <p className="text-sm font-semibold text-ink">{addedDate}</p>
+                <p className="text-sm font-semibold text-foreground">{addedDate}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-[#E9E2D6] bg-[#FBF8F3] p-4">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-[#FBE9C6] text-[#7A4F0C]">
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-background p-4">
+              <span className="flex size-9 items-center justify-center rounded-xl bg-highlight text-highlight-foreground">
                 {/* <CalendarIcon className="size-4" /> */}
                 <Layers3  className="size-6"/>
               </span>
@@ -113,7 +113,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
                 <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
                   Copies Left
                 </p>
-                <p className="text-sm font-semibold text-ink">{book.count}</p>
+                <p className="text-sm font-semibold text-foreground">{book.count}</p>
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@ export function BookDetailsCard({ book }: { book: Book }) {
             <Link href={"/"}>
             <Button
               variant="outline"
-              className="h-14 rounded-full border-[#E9E2D6] px-7 text-base font-semibold text-ink hover:bg-cream w-full"
+              className="h-14 rounded-full border-border px-7 text-base font-semibold text-foreground hover:bg-muted w-full"
             >
               <ArrowLeftIcon className="size-4" />
               Back

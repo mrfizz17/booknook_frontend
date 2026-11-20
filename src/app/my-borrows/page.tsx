@@ -36,10 +36,10 @@ export default async function MyBorrowsPage() {
     return(
       <>
       <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-            <span className="flex size-14 items-center justify-center rounded-full bg-[#F1EBDF] text-[#7A6A52]">
+            <span className="flex size-14 items-center justify-center rounded-full bg-tint text-tint-foreground">
               <BookOpenIcon className="size-6" strokeWidth={1.8} />
             </span>
-            <h2 className="mt-4 font-heading text-xl font-semibold text-ink">
+            <h2 className="mt-4 font-heading text-xl font-semibold text-foreground">
               {borrowedBooks.msg}
             </h2>
           

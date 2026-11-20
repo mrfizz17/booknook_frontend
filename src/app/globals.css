@@ -14,6 +14,11 @@
   --color-amber: var(--amber);
   --color-teal: var(--teal);
   --color-terracotta: var(--terracotta);
+  --color-tint: var(--tint);
+  --color-tint-foreground: var(--tint-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-subtle: var(--subtle);
   --font-sans: var(--font-inter);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-heading: var(--font-fraunces);
@@ -69,6 +74,12 @@
   --teal: #2f6f73;
   --terracotta: #c8553d;
 
+  --tint: #f1ebdf;
+  --tint-foreground: #7a6a52;
+  --highlight: #fbe9c6;
+  --highlight-foreground: #7a4f0c;
+  --subtle: #fbf4e6;
+
   --background: var(--paper);
   --foreground: var(--ink);
   --card: #ffffff;
@@ -113,6 +124,11 @@
   --popover-foreground: var(--paper);
   --primary: var(--amber);
   --primary-foreground: var(--dark);
+  --tint: #223040;
+  --tint-foreground: #c9d2dd;
+  --highlight: #3a2f17;
+  --highlight-foreground: #f2c879;
+  --subtle: #1d2a38;
   --secondary: #223040;
   --secondary-foreground: var(--paper);
   --muted: #223040;

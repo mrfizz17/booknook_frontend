@@ -80,14 +80,14 @@ export function BorrowList({ books }: { books: BorrowedBook[] }) {
       {/* Tickets */}
       <section className="relative z-10 mt-12 flex flex-col gap-6">
         {books.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-[28px] border border-[#E9E2D6] bg-white px-6 py-16 text-center shadow-[0_18px_45px_-30px_rgba(30,42,58,0.4)]">
-            <span className="flex size-14 items-center justify-center rounded-full bg-[#F1EBDF] text-[#7A6A52]">
+          <div className="flex flex-col items-center justify-center rounded-[28px] border border-border bg-card px-6 py-16 text-center shadow-[0_18px_45px_-30px_rgba(30,42,58,0.4)] dark:bg-ink">
+            <span className="flex size-14 items-center justify-center rounded-full bg-tint text-tint-foreground">
               <BookOpenIcon className="size-6" strokeWidth={1.8} />
             </span>
-            <h2 className="mt-4 font-heading text-xl font-semibold text-ink">
+            <h2 className="mt-4 font-heading text-xl font-semibold text-foreground">
               No borrowed books right now
             </h2>
-            <p className="mt-1 max-w-sm text-sm text-[#6B7685]">
+            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
               Your reading list is empty. Find something lovely on the shelf and
               it will show up here.
             </p>

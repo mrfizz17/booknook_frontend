@@ -51,7 +51,7 @@ const categories = [
 
 
 const fieldBase =
-  "h-13 w-full rounded-2xl border-border text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
+  "h-13 w-full rounded-2xl border-border text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
 
 export function EditDialog({ book }: { book: Book }) {
   const router = useRouter();
@@ -95,15 +95,15 @@ export function EditDialog({ book }: { book: Book }) {
             size="icon-lg"
             aria-label={`Edit`}
             // onClick={() => console.log("Edit book", book._id)}
-            className="rounded-xl border-[#E9E2D6] bg-white text-[#5A6675] hover:bg-[#FBF4E6] hover:text-ink"
+            className="rounded-xl border-border bg-card text-muted-foreground hover:bg-subtle hover:text-foreground"
           >
             <PencilIcon className="size-4" />
           </Button>
         }
       />
-      <DialogContent className="sm:max-w-xl bg-accent-foreground p-5">
+      <DialogContent className="sm:max-w-xl p-5">
         <form onSubmit={handleUpdate} noValidate>
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-ink sm:text-[34px]">
+          <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[34px]">
             Update Book details
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground">
@@ -119,7 +119,7 @@ export function EditDialog({ book }: { book: Book }) {
                   name="title"
                   defaultValue={book.title}
                   placeholder="e.g. The Great Gatsby"
-                  className={cn(fieldBase, "bg-paper")}
+                  className={cn(fieldBase, "bg-background")}
                 />
               </div>
 
@@ -130,7 +130,7 @@ export function EditDialog({ book }: { book: Book }) {
                   name="author"
                   defaultValue={book.author}
                   placeholder="e.g. F. Scott Fitzgerald"
-                  className={cn(fieldBase, "bg-paper")}
+                  className={cn(fieldBase, "bg-background")}
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ export function EditDialog({ book }: { book: Book }) {
                   id="category"
                   className={cn(
                     fieldBase,
-                    "justify-between bg-paper px-4 data-placeholder:text-muted-foreground/70",
+                    "justify-between bg-background px-4 data-placeholder:text-muted-foreground/70",
                   )}
                 >
                   <SelectValue placeholder="Select a category" />
@@ -152,7 +152,7 @@ export function EditDialog({ book }: { book: Book }) {
                     <SelectItem
                       key={item.value}
                       value={item.value}
-                      className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
+                      className="rounded-xl px-3 py-2 text-sm focus:bg-muted"
                     >
                       {item.label}
                     </SelectItem>
@@ -169,7 +169,7 @@ export function EditDialog({ book }: { book: Book }) {
                   type="value"
                   placeholder="e.g. 5"
                   defaultValue={book.count}
-                  className={cn(fieldBase, "bg-paper")}
+                  className={cn(fieldBase, "bg-background")}
                 />
               </div>
 
@@ -180,7 +180,7 @@ export function EditDialog({ book }: { book: Book }) {
                     id="category"
                     className={cn(
                       fieldBase,
-                      "justify-between py-6  bg-paper px-4 data-placeholder:text-muted-foreground/70",
+                      "justify-between py-6  bg-background px-4 data-placeholder:text-muted-foreground/70",
                     )}
                   >
                     <SelectValue placeholder="Select a category" />
@@ -191,7 +191,7 @@ export function EditDialog({ book }: { book: Book }) {
                         key={item.value}
                         value={item.value}
                         
-                        className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
+                        className="rounded-xl px-3 py-2 text-sm focus:bg-muted"
                       >
                         {item.label}
                       </SelectItem>
@@ -214,7 +214,7 @@ export function EditDialog({ book }: { book: Book }) {
                   name="image"
                   defaultValue={book.image}
                   placeholder="https://i.ibb.co/your-book-cover.jpg"
-                  className={cn(fieldBase, "bg-paper pl-11")}
+                  className={cn(fieldBase, "bg-background pl-11")}
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ export function EditDialog({ book }: { book: Book }) {
                 name="description"
                 defaultValue={book.description}
                 placeholder="What is this book about?"
-                className="min-h-[140px] resize-none rounded-2xl border-border bg-paper px-4 py-3 text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
+                className="min-h-[140px] resize-none rounded-2xl border-border bg-background px-4 py-3 text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
               />
             </div>
 
@@ -242,7 +242,7 @@ export function EditDialog({ book }: { book: Book }) {
                     aria-readonly
                     className={cn(
                       fieldBase,
-                      "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                      "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                     )}
                   />
                   <LockKeyholeIcon
@@ -264,7 +264,7 @@ export function EditDialog({ book }: { book: Book }) {
                     aria-readonly
                     className={cn(
                       fieldBase,
-                      "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                      "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                     )}
                   />
                   <LockKeyholeIcon
@@ -279,7 +279,7 @@ export function EditDialog({ book }: { book: Book }) {
             render={
               <Button
                 type="submit"
-                className="relative mt-7 h-14 w-full overflow-hidden rounded-full bg-amber text-base font-bold text-ink shadow-[0_14px_30px_-12px_rgba(232,163,61,0.8)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/30"
+                className="relative mt-7 h-14 w-full overflow-hidden rounded-full bg-amber text-base font-bold text-foreground shadow-[0_14px_30px_-12px_rgba(232,163,61,0.8)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/30"
               >
                 <span
                   aria-hidden
@@ -294,7 +294,7 @@ export function EditDialog({ book }: { book: Book }) {
           />
         </form>
         {/* <form onSubmit={handleUpdate} noValidate>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight text-ink sm:text-[34px]">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[34px]">
                 Book details
               </h2>
               <p className="mt-1.5 text-sm text-muted-foreground">
@@ -309,7 +309,7 @@ export function EditDialog({ book }: { book: Book }) {
                       id="book-title"
                       name="title"
                       placeholder="e.g. The Great Gatsby"
-                      className={cn(fieldBase, "bg-paper")}
+                      className={cn(fieldBase, "bg-background")}
                     />
                   </div>
         
@@ -319,7 +319,7 @@ export function EditDialog({ book }: { book: Book }) {
                       id="author-name"
                       name="author"
                       placeholder="e.g. F. Scott Fitzgerald"
-                      className={cn(fieldBase, "bg-paper")}
+                      className={cn(fieldBase, "bg-background")}
                     />
                   </div>
                 </div>
@@ -332,7 +332,7 @@ export function EditDialog({ book }: { book: Book }) {
                       name="count"
                       type="value"
                       placeholder="e.g. 5"
-                      className={cn(fieldBase, "bg-paper")}
+                      className={cn(fieldBase, "bg-background")}
                     />
                   </div>
         
@@ -343,7 +343,7 @@ export function EditDialog({ book }: { book: Book }) {
                         id="category"
                         className={cn(
                           fieldBase,
-                          "justify-between py-6  bg-paper px-4 data-placeholder:text-muted-foreground/70",
+                          "justify-between py-6  bg-background px-4 data-placeholder:text-muted-foreground/70",
                         )}
                       >
                         <SelectValue placeholder="Select a category" />
@@ -353,7 +353,7 @@ export function EditDialog({ book }: { book: Book }) {
                           <SelectItem
                             key={item.value}
                             value={item.value}
-                            className="rounded-xl px-3 py-2 text-sm focus:bg-cream"
+                            className="rounded-xl px-3 py-2 text-sm focus:bg-muted"
                           >
                             {item.label}
                           </SelectItem>
@@ -377,7 +377,7 @@ export function EditDialog({ book }: { book: Book }) {
                       type="url"
                       name="image"
                       placeholder="https://i.ibb.co/your-book-cover.jpg"
-                      className={cn(fieldBase, "bg-paper pl-11")}
+                      className={cn(fieldBase, "bg-background pl-11")}
                     />
                   </div>
                 </div>
@@ -388,7 +388,7 @@ export function EditDialog({ book }: { book: Book }) {
                     id="description"
                     name="description"
                     placeholder="What is this book about?"
-                    className="min-h-[140px] resize-none rounded-2xl border-border bg-paper px-4 py-3 text-sm text-ink shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
+                    className="min-h-[140px] resize-none rounded-2xl border-border bg-background px-4 py-3 text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25"
                   />
                 </div>
         
@@ -404,7 +404,7 @@ export function EditDialog({ book }: { book: Book }) {
                         aria-readonly
                         className={cn(
                           fieldBase,
-                          "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                          "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                         )}
                       />
                       <LockKeyholeIcon
@@ -426,7 +426,7 @@ export function EditDialog({ book }: { book: Book }) {
                         aria-readonly
                         className={cn(
                           fieldBase,
-                          "cursor-default border-dashed bg-cream pr-11 text-ink/70 focus-visible:border-border focus-visible:ring-0",
+                          "cursor-default border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
                         )}
                       />
                       <LockKeyholeIcon
@@ -440,7 +440,7 @@ export function EditDialog({ book }: { book: Book }) {
         
               <Button
                 type="submit"
-                className="relative mt-7 h-14 w-full overflow-hidden rounded-full bg-amber text-base font-bold text-ink shadow-[0_14px_30px_-12px_rgba(232,163,61,0.8)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/30"
+                className="relative mt-7 h-14 w-full overflow-hidden rounded-full bg-amber text-base font-bold text-foreground shadow-[0_14px_30px_-12px_rgba(232,163,61,0.8)] transition-colors hover:bg-amber/90 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/30"
               >
                 <span
                   aria-hidden

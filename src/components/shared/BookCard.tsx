@@ -21,7 +21,7 @@ export function BookCard({ book }: { book: BookCardBook }) {
   return (
     <article className="group relative flex flex-col rounded-2xl border border-border bg-card p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
         
-        <span className="absolute top-5 left-5 z-10 rounded-full bg-dark px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-paper uppercase">
+        <span className="absolute top-5 left-5 z-10 rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-background uppercase">
           New
         </span>
    
@@ -48,13 +48,13 @@ export function BookCard({ book }: { book: BookCardBook }) {
 
       <div className="flex flex-1 flex-col px-1 pt-4 pb-1">
         <Badge
-          variant="secondary"
-          className="w-fit bg-cream text-[11px] font-medium text-ink"
+          variant="outline"
+          className="w-fit bg-highlight text-[11px] font-medium text-highlight-foreground"
         >
           {category}
         </Badge>
 
-        <h3 className="mt-2 font-heading text-lg leading-snug font-semibold text-ink">
+        <h3 className="mt-2 font-heading text-lg leading-snug font-semibold text-foreground">
 
             {bookTitle}
         
@@ -63,7 +63,7 @@ export function BookCard({ book }: { book: BookCardBook }) {
 
         <Link href={`/books/${book._id}`}>
         <Button
-          className="mt-4 h-9 w-full rounded-full bg-dark text-sm text-paper hover:bg-ink cursor-pointer"
+          className="mt-4 h-9 w-full rounded-full bg-foreground text-sm text-background hover:bg-foreground/90 cursor-pointer"
         >
           View Details
           <ArrowRightIcon />

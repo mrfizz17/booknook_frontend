@@ -36,9 +36,9 @@ export function DialogDemo() {
   return (
     <Dialog>
       <DialogTrigger
-        render={<Button className={"bg-amber rounded-[4px] text-white"}><LogOutIcon />Logout</Button>}
+        render={<Button className={"bg-amber rounded-[4px] text-dark"}><LogOutIcon />Logout</Button>}
       />
-      <DialogContent className="sm:max-w-sm bg-accent-foreground">
+      <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Are You Sure to Log Out ?</DialogTitle>
         </DialogHeader>
