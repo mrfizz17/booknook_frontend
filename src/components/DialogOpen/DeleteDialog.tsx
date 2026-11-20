@@ -24,10 +24,18 @@ import { toast } from "sonner";
 export function DeleteDialog({ book }: { book: Book }) {
   const router = useRouter();
 
+
   const handleDelete = async () => {
+    const {data:jwtToken,error}= await authClient.token();
+
+    const token = jwtToken?.token;
+
     const id = book._id;
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/delete/${id}`,{
-        method:"DELETE"
+        method:"DELETE",
+        headers:{
+          authorization:`Bearer ${token}`
+        }
     })
 
     const data = await res.json();

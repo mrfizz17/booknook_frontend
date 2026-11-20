@@ -45,12 +45,14 @@ type CoverProps = {
   to: string;
 };
 
-const covers: Array<CoverProps & {
-  className: string;
-  rotate: number;
-  delay: number;
-  duration: number;
-}> = [
+const covers: Array<
+  CoverProps & {
+    className: string;
+    rotate: number;
+    delay: number;
+    duration: number;
+  }
+> = [
   {
     title: "Pride and Prejudice",
     author: "Jane Austen",
@@ -215,12 +217,12 @@ export function Hero() {
                 </p>
 
                 <div className="mt-7 flex flex-wrap items-center gap-3">
-                  <Button
-                    className="h-10 rounded-full px-5 text-sm"
-                  >
-                    Browse Books
-                    <ArrowRightIcon />
-                  </Button>
+                  <Link href="/all-books">
+                    <Button className="h-10 rounded-full px-5 text-sm">
+                      Browse Books
+                      <ArrowRightIcon />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>
@@ -241,7 +243,7 @@ export function Hero() {
                   "h-1.5 rounded-full transition-all",
                   index === activeIndex
                     ? "w-7 bg-amber"
-                    : "w-4 bg-paper/25 hover:bg-paper/50"
+                    : "w-4 bg-paper/25 hover:bg-paper/50",
                 )}
               />
             ))}

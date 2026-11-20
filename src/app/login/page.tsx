@@ -30,6 +30,9 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { signIn } from "@/lib/auth-client";
+import { useRouter, useSearchParams} from "next/navigation";
+import { toast } from "sonner";
+
 
 const loginSchema = z.object({
   email: z
@@ -49,7 +52,13 @@ const inputGroupError =
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const reduceMotion = useReducedMotion();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const callbackUrl = searchParams.get('callbackUrl') ||'/';
+
+
+
   const {
     register,
     handleSubmit,
@@ -64,7 +73,7 @@ export default function LoginPage() {
     const { data, error } = await signIn.email({
       email: values.email,
       password: values.password,
-      callbackURL: "/",
+      callbackURL:callbackUrl
     });
 
     if (error) {
@@ -72,7 +81,9 @@ export default function LoginPage() {
       return;
     }
 
-    console.log("Log in Succesfull");
+    toast.success("Login Succesfull");
+    // router.push(callbackUrl);
+
   };
 
   const handleGoogleSignUp = async () => {

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { BookDetailsCard } from "@/components/books/BookDetailsCard";
 import type { Book } from "@/types/book";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 
 interface Iparams {
@@ -9,11 +11,25 @@ interface Iparams {
   }
 }
 
+
+
 export default async function BookDetailsPage({params}:Iparams) {
+
+  const jwtToken = await auth.api.getToken({
+    headers:await headers()
+  }); 
+  const token = jwtToken?.token;
+  console.log(token);
+
+
 
   const {id} = await params;
  
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books/${id}`,{
+    headers:{
+      "Authorization" : `Bearer ${token}`
+    }
+  });
   const book:Book= await res.json();
 
   return (

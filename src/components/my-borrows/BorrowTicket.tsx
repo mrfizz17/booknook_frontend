@@ -6,7 +6,7 @@ import { BookOpenIcon, Undo2Icon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -38,8 +38,14 @@ export function BorrowTicket({
 
 
   const handlereturn=async ()=>{
+     const {data:jwtToken,error}= await authClient.token();
+     const token = jwtToken?.token;
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-borrows/delete/${id}/${email}`,{
-      method:"DELETE"
+      method:"DELETE",
+      headers:{
+        authorization:`Bearer ${token}`
+      }
     });
 
     const data = await res.json();

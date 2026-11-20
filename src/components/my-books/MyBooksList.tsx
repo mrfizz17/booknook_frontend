@@ -181,7 +181,7 @@ export function MyBooksList({ books }: { books: Book[] }) {
               animate="show"
               className="mt-1 flex flex-col gap-5"
             >
-              {books.map((book) => (
+              {books.map((book:Book) => (
                 <motion.li key={book._id} variants={rowVariants}>
                  
                     <div className="grid grid-cols-1 gap-4 border rounded-2xl px-3 py-4 transition-all duration-300 hover:translate-x-1.5 hover:bg-[#FBF4E6] md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center md:gap-6">

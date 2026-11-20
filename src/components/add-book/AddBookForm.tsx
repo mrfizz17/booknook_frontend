@@ -17,10 +17,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { format } from "date-fns";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { redirect, useRouter } from "next/navigation";
 import { router } from "better-auth/api";
-
 
 const categories = [
   { value: "Fiction", label: "Fiction" },
@@ -36,10 +35,10 @@ interface AddBookType {
   category: string;
   image: string;
   description: string;
-  addedAt:string;
+  addedAt: string;
   userName?: string;
   userEmail?: string;
-  count:number
+  count: number;
 }
 
 const fieldBase =
@@ -56,24 +55,36 @@ export function AddBookForm() {
     event.preventDefault();
 
     const formEntries = new FormData(event.currentTarget);
-    const formData = Object.fromEntries(formEntries.entries()) as unknown as AddBookType;
+    const formData = Object.fromEntries(
+      formEntries.entries(),
+    ) as unknown as AddBookType;
+
+
+    const { data: JwtData, error } = await authClient.token();
+
+    const token = await JwtData?.token;
+
+    console.log(token);
 
     const date = new Date();
     const addedAt = format(date, "d MMMM yyyy");
 
-
     formData.addedAt = addedAt;
-    formData.count=Number(formData.count);
+    formData.count = Number(formData.count);
 
     console.log(formData);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/add-books`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/add-books`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":`Bearer ${token}`
+        },
+        body: JSON.stringify(formData),
       },
-      body: JSON.stringify(formData),
-    });
+    );
 
     const data = await res.json();
     toast.success(data.msg);
@@ -150,8 +161,6 @@ export function AddBookForm() {
             </Select>
           </div>
         </div>
-
-        
 
         <div className="space-y-2">
           <Label htmlFor="book-image">Book Image URL</Label>

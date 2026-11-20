@@ -60,16 +60,22 @@ export function EditDialog({ book }: { book: Book }) {
   const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+
     const formData = new FormData(e.currentTarget);
     const updatedData:IupdatedData= Object.fromEntries(formData.entries()) as unknown as  IupdatedData;
 
     updatedData.count= Number(updatedData.count);
+
+    
+    const {data:jwtToken,error}= await authClient.token();
+    const token = jwtToken?.token;
 
     const id = book._id;
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/update/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        authorization:`Bearer ${token}`
       },
       body: JSON.stringify(updatedData),
     });
@@ -162,6 +168,7 @@ export function EditDialog({ book }: { book: Book }) {
                   name="count"
                   type="value"
                   placeholder="e.g. 5"
+                  defaultValue={book.count}
                   className={cn(fieldBase, "bg-paper")}
                 />
               </div>

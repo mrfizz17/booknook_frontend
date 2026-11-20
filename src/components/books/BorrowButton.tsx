@@ -6,30 +6,33 @@ import { Button } from "@/components/ui/button";
 import { Book } from "@/types/book";
 import {  useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 
 
 export function BorrowButton({book}:{book:Book}) {
 
   const router =  useRouter();
-
   const session = useSession();
 
   const BorrowedUserEmail = session?.data?.user.email;
   const BorrowedUserName = session?.data?.user.name;
 
+  
+   
+
   const handleBorrow=async  ()=>{
     const id = book._id;
     const {_id,count,userEmail,userName,...updateData} ={...book,BorrowedUserEmail:BorrowedUserEmail,BorrowedUserName:BorrowedUserName,OldId:id} ;
-    
+    console.log(updateData);
 
-
-    console.log(updateData)
+     const {data:jwtToken,error}= await authClient.token();
+    const token = jwtToken?.token;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/my-books/borrow/${id}`,{
       method:"POST",
       headers:{
-        'Content-type' : 'application/json'
+        'Content-type' : 'application/json',
+         authorization:`Bearer ${token}`
       },
       body:JSON.stringify(updateData)
     });
