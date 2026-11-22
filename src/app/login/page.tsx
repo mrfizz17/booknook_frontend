@@ -77,7 +77,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      console.log(error);
+      toast.error("Failed to log in");
       return;
     }
 
@@ -90,6 +90,9 @@ export default function LoginPage() {
     const data = await signIn.social({
       provider: "google",
     });
+    if(data){
+      router.push(callbackUrl);
+    }
   };
 
   return (

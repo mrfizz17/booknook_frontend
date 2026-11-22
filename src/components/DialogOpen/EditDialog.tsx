@@ -101,7 +101,7 @@ export function EditDialog({ book }: { book: Book }) {
           </Button>
         }
       />
-      <DialogContent className="sm:max-w-xl p-5">
+      <DialogContent className="sm:max-w-xl p-5 h-screen overflow-y-scroll mt-10 pb-20 pt-10 md:overflow-hidden md:h-fit md:p-5">
         <form onSubmit={handleUpdate} noValidate>
           <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[34px]">
             Update Book details

@@ -40,7 +40,22 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           {children}
           <Footer />
-          <Toaster />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              classNames: {
+                toast: "!bg-[#E8A33D] !text-[#1E2A3A] !border-zinc-800",
+                title: "font-semibold !text-white !text-[16px]",
+                description: "!text-zinc-400",
+                actionButton: "!bg-blue-600 !text-white",
+                cancelButton: "!bg-zinc-700 !text-zinc-200",
+                success:
+                  "!border-l-4 !border-l-[#E8A33D] [&_[data-icon]]:!text-[#1E2A3A]",
+                error:
+                  "!border-l-4 !border-l-rose-500 [&_[data-icon]]:!text-rose-500",
+              },
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

@@ -3,6 +3,7 @@ import { BookDetailsCard } from "@/components/books/BookDetailsCard";
 import type { Book } from "@/types/book";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 
 
 interface Iparams {
@@ -24,15 +25,17 @@ export default async function BookDetailsPage({params}:Iparams) {
 
 
   const {id} = await params;
- 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books/${id}`,{
-    headers:{
-      "Authorization" : `Bearer ${token}`
-    }
-  });
-  const book:Book= await res.json();
 
-  return (
+  try{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/all-books/${id}`,{
+      headers:{
+        "Authorization" : `Bearer ${token}`
+      }
+    });
+    const book:Book= await res.json();
+
+
+    return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-24 sm:px-6">
       {/* Banner */}
       <section className="relative overflow-hidden rounded-[32px] bg-[#16202D] text-paper">
@@ -102,4 +105,15 @@ export default async function BookDetailsPage({params}:Iparams) {
       </div>
     </main>
   );
+
+  }catch{
+    notFound();
+    return;
+  }
+ 
+  
+
+ 
+
+  
 }

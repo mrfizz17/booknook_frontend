@@ -87,7 +87,6 @@ export function Navbar() {
   'G'
 )
 
-  console.log(profilePicOrChar)
 
   const links = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
 

@@ -63,8 +63,13 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
         body: JSON.stringify(updateData),
       },
     );
-
     const data = await res.json();
+
+    if(!res.ok){
+        toast.error(data.msg);
+        return;
+    }
+
     toast.success(data.msg);
     router.refresh();
   };
@@ -107,7 +112,7 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
                 <Label htmlFor="book-title">Book Title</Label>
                 <p className={cn(
                       fieldBase,
-                      "cursor-default pl-4 pt-4 border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0",
+                      "cursor-default pl-4 border-dashed bg-muted pr-11 text-foreground/70 focus-visible:border-border focus-visible:ring-0 flex justify-center items-center",
                     )}> {book.title}</p>
               </div>
 
@@ -177,7 +182,7 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
                   className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 animate-shine bg-white/35 blur-md"
                 />
                 <span className="relative z-10 inline-flex items-center gap-2">
-                  Confrim Borrow Book
+                   Confrim
                   <BookOpenIcon className="size-5" />
 
                 </span>

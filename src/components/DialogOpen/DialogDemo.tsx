@@ -18,6 +18,7 @@ import { authClient, signOut } from "@/lib/auth-client";
 import { LogOutIcon } from "lucide-react";
 
 import { redirect, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 export function DialogDemo() {
@@ -26,6 +27,7 @@ export function DialogDemo() {
     await signOut({
       fetchOptions: {
         onSuccess: () => {
+          toast.error("You Succesfully Logged Out ");
           router.push("/login"); 
           // redirect to login page
           
