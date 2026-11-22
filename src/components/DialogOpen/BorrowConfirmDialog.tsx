@@ -18,7 +18,6 @@ import { authClient, signOut, useSession } from "@/lib/auth-client";
 import { cn } from "cn";
 import {
   BookOpenIcon,
-  Clock3Icon,
   LockKeyholeIcon,
   PencilIcon,
   UploadIcon,
@@ -27,7 +26,6 @@ import {
 import { useRouter } from "next/navigation";
 
 import { Book } from "@/types/book";
-import { BORROW_DAYS } from "@/lib/borrow-dates";
 
 import { toast } from "sonner";
 
@@ -43,11 +41,15 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
 
   const handleBorrow = async () => {
     const id = book._id;
+    const borrowedAt = new Date();
+    const returnDate = new Date(borrowedAt.getTime() + 5 * 24 * 60 * 60 * 1000);
     const { _id, count, userEmail, userName, ...updateData } = {
       ...book,
       BorrowedUserEmail: BorrowedUserEmail,
       BorrowedUserName: BorrowedUserName,
       OldId: id,
+      borrowDate: borrowedAt.toISOString(),
+      returnDate: returnDate.toISOString(),
     };
     console.log(updateData);
 
@@ -106,11 +108,6 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground">
             Check who borrowing this book below.
-          </p>
-          <p className="mt-3 flex items-center gap-2 rounded-xl bg-highlight px-3 py-2 text-xs text-highlight-foreground">
-            <Clock3Icon className="size-4 shrink-0" />
-            Loans last {BORROW_DAYS} days. Your return date will appear in My
-            Borrows.
           </p>
 
           <div className="mt-7 space-y-5">

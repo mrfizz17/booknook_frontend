@@ -2,29 +2,18 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { BookOpenIcon, TriangleAlertIcon } from "lucide-react";
+import { BookOpenIcon } from "lucide-react";
 
 import {
   BorrowTicket,
   type BorrowedBook,
 } from "@/components/my-borrows/BorrowTicket";
 import { Button } from "@/components/ui/button";
-import { getBorrowStatus } from "@/lib/borrow-dates";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-export function BorrowList({
-  books,
-  now,
-}: {
-  books: BorrowedBook[];
-  now: number;
-}) {
+export function BorrowList({ books }: { books: BorrowedBook[] }) {
   const reduceMotion = useReducedMotion();
-
-  const overdueCount = books.filter(
-    (book) => getBorrowStatus(book, now) === "overdue",
-  ).length;
 
   return (
     <div className="w-full">
@@ -88,22 +77,6 @@ export function BorrowList({
         </motion.div>
       </section>
 
-      {overdueCount > 0 && (
-        <div
-          role="alert"
-          className="mx-auto mt-6 flex max-w-7xl items-start gap-3 rounded-2xl border border-terracotta/30 bg-terracotta/10 px-5 py-4 text-sm text-terracotta"
-        >
-          <TriangleAlertIcon className="mt-0.5 size-5 shrink-0" />
-          <p>
-            <span className="font-semibold">
-              {overdueCount} {overdueCount === 1 ? "book is" : "books are"} past
-              the return date.
-            </span>{" "}
-            This is just a reminder — nothing is returned automatically.
-          </p>
-        </div>
-      )}
-
       {/* Tickets */}
       <section className="relative z-10 mt-12 flex flex-col gap-6">
         {books.length === 0 ? (
@@ -139,7 +112,6 @@ export function BorrowList({
                 key={book._id}
                 book={book}
                 reduceMotion={reduceMotion}
-                now={now}
               />
             ))}
           </motion.div>
