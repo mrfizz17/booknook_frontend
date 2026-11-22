@@ -1,13 +1,26 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { BookOpenIcon, Undo2Icon } from "lucide-react";
+import {
+  CalendarDaysIcon,
+  Clock3Icon,
+  TriangleAlertIcon,
+  Undo2Icon,
+} from "lucide-react";
+import { cn } from "cn";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { authClient, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import {
+  formatBorrowDate,
+  formatDueDistance,
+  formatOverdueDistance,
+  getBorrowDates,
+  getBorrowStatus,
+} from "@/lib/borrow-dates";
 import { toast } from "sonner";
 
 export type BorrowedBook = {
@@ -19,15 +32,19 @@ export type BorrowedBook = {
   description:string;
   BorrowedUserEmail:string;
   BorrowedUserName:string;
-  OldId:string
+  OldId:string;
+  borrowDate?: string;
+  returnDate?: string;
 };
 
 export function BorrowTicket({
   book,
   reduceMotion,
+  now,
 }: {
   book: BorrowedBook;
   reduceMotion: boolean | null;
+  now: number;
 }) {
 
   const session = useSession();
@@ -35,6 +52,8 @@ export function BorrowTicket({
 
   const email = session?.data?.user.email;
   const id = book._id;
+  const { borrowedAt, dueAt } = getBorrowDates(book);
+  const status = getBorrowStatus(book, now);
 
 
   const handlereturn=async ()=>{
@@ -96,6 +115,49 @@ export function BorrowTicket({
           {book.title}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">by {book.author}</p>
+
+        <div className="mt-5 grid grid-cols-2 gap-4 border-t border-dashed border-border pt-4">
+          <div>
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+              <CalendarDaysIcon className="size-3.5" />
+              Borrowed
+            </p>
+            <p className="mt-1 text-sm font-semibold text-foreground">
+              {formatBorrowDate(borrowedAt)}
+            </p>
+          </div>
+          <div>
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+              <Clock3Icon className="size-3.5" />
+              Return by
+            </p>
+            <p
+              className={cn(
+                "mt-1 text-sm font-semibold",
+                status === "overdue" ? "text-terracotta" : "text-foreground",
+              )}
+            >
+              {formatBorrowDate(dueAt)}
+            </p>
+          </div>
+        </div>
+
+        {dueAt && (status === "overdue" || status === "due-soon") && (
+          <p
+            role="status"
+            className={cn(
+              "mt-4 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium",
+              status === "overdue"
+                ? "bg-terracotta/10 text-terracotta"
+                : "bg-highlight text-highlight-foreground",
+            )}
+          >
+            <TriangleAlertIcon className="size-3.5 shrink-0" />
+            {status === "overdue"
+              ? `Overdue by ${formatOverdueDistance(dueAt, now)}`
+              : `Due ${formatDueDistance(dueAt, now)}`}
+          </p>
+        )}
       </div>
 
       {/* Actions */}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { BorrowList } from "@/components/my-borrows/BorrowList";
-import type { BorrowedBook } from "@/components/my-borrows/BorrowTicket";
+import { getCurrentTime } from "@/lib/borrow-dates";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { BookOpenIcon } from "lucide-react";
@@ -31,6 +31,7 @@ export default async function MyBorrowsPage() {
     }
   })
   const borrowedBooks = await res.json();
+  const now = getCurrentTime();
 
   if (!res.ok) {
     return(
@@ -51,7 +52,7 @@ export default async function MyBorrowsPage() {
     return (
     <main className="flex-1 pb-16">
       <div className="mx-auto w-full max-w-7xl px-4 pt-6 sm:px-6">
-        <BorrowList books={borrowedBooks} />
+        <BorrowList books={borrowedBooks} now={now} />
       </div>
     </main>
   );
