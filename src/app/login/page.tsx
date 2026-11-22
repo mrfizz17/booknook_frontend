@@ -89,10 +89,8 @@ export default function LoginPage() {
   const handleGoogleSignUp = async () => {
     const data = await signIn.social({
       provider: "google",
+      callbackURL:callbackUrl
     });
-    if(data){
-      router.push(callbackUrl);
-    }
   };
 
   return (

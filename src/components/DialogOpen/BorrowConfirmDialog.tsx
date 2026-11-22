@@ -18,6 +18,7 @@ import { authClient, signOut, useSession } from "@/lib/auth-client";
 import { cn } from "cn";
 import {
   BookOpenIcon,
+  Clock3Icon,
   LockKeyholeIcon,
   PencilIcon,
   UploadIcon,
@@ -26,6 +27,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import { Book } from "@/types/book";
+
 
 import { toast } from "sonner";
 
@@ -41,15 +43,13 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
 
   const handleBorrow = async () => {
     const id = book._id;
-    const borrowedAt = new Date();
-    const returnDate = new Date(borrowedAt.getTime() + 5 * 24 * 60 * 60 * 1000);
+    const borrowDate= new Date();
     const { _id, count, userEmail, userName, ...updateData } = {
       ...book,
       BorrowedUserEmail: BorrowedUserEmail,
       BorrowedUserName: BorrowedUserName,
       OldId: id,
-      borrowDate: borrowedAt.toISOString(),
-      returnDate: returnDate.toISOString(),
+      borrowDate:borrowDate,
     };
     console.log(updateData);
 
@@ -109,6 +109,7 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
           <p className="mt-1.5 text-sm text-muted-foreground">
             Check who borrowing this book below.
           </p>
+         
 
           <div className="mt-7 space-y-5">
             <div className="grid gap-5 sm:grid-cols-2">
