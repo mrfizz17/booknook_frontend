@@ -30,6 +30,7 @@ import { Book } from "@/types/book";
 
 
 import { toast } from "sonner";
+import { addDays } from "date-fns";
 
 const fieldBase =
   "h-13 w-full rounded-2xl border-border text-sm text-foreground shadow-none placeholder:text-muted-foreground/70 focus-visible:border-amber focus-visible:ring-3 focus-visible:ring-amber/25";
@@ -44,12 +45,16 @@ export function BorrowConfirmDialog({ book }: { book: Book }) {
   const handleBorrow = async () => {
     const id = book._id;
     const borrowDate= new Date();
+    const returnDate = addDays(borrowDate,5);
+
+    console.log(returnDate);
     const { _id, count, userEmail, userName, ...updateData } = {
       ...book,
       BorrowedUserEmail: BorrowedUserEmail,
       BorrowedUserName: BorrowedUserName,
       OldId: id,
       borrowDate:borrowDate,
+      returnDate:returnDate
     };
     console.log(updateData);
 

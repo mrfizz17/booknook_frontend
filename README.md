@@ -114,7 +114,7 @@ The BookNook frontend communicates with a separate backend application.
 
 - **Frontend Repository:** [booknook_frontend](https://github.com/mrfizz17/booknook_frontend)
 - **Backend Repository:** [booknook_backend](https://github.com/mrfizz17/booknook_backend)
-- **Backend Deployment:** [BookNook Backend API](https://mrfizz17-booknookbackend.vercel.app/)
+- **Backend Deployment:** [BookNook Backend API](https://mrfizz17-booknookbackend.vercel.app/api/all-books)
 
 ---
 
@@ -131,7 +131,7 @@ Experience BookNook:
 **Mustafizur Rahman Chowdhury**
 
 - GitHub: [@mrfizz17](https://github.com/mrfizz17)
-- LinkedIn: [Connect with me](https://www.linkedin.com/in/mustafizur-rahman-b8616930a/)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/mustafizur-r-chowdhury/)
 
 ---
 
