@@ -77,7 +77,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      toast.error("Failed to log in");
+      toast.error("Failed to log in , please enter valid credentials");
       return;
     }
 
